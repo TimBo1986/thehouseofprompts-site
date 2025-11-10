@@ -110,7 +110,7 @@
         </div>
       </div>
 
-      <div class="tab-content enable">
+      <div class="tab-content enable" id="workshops">
         <div class="tab-grid">
           <div class="tab-card"><div class="emoji">📘</div><h3>KI Basics (4h)</h3><p>LLM verstehen, sicher nutzen, erste Prompts. Für alle Branchen.</p></div>
           <div class="tab-card"><div class="emoji">🗂️</div><h3>KI im Arbeitsalltag (1 Tag)</h3><p>Prozesse, Rollen, Automationen. Remote oder vor Ort.</p></div>
@@ -173,7 +173,6 @@
   <script>
     window.difyChatbotConfig = {
       token: '8oS92cO3YCLgidRv',
-      // hier könntest du später user_id o.ä. übergeben
     }
   </script>
   <script src="https://udify.app/embed.min.js" id="8oS92cO3YCLgidRv" defer></script>
@@ -187,5 +186,45 @@
     }
   </style>
 
+  <!-- LEAD-COLLECTOR: hört auf JSON vom Bot und sendet an Google Apps Script -->
+  <script>
+    // TODO: hier deine echte Web-App-URL einfügen
+    const GOOGLE_WEBHOOK_URL = "https://script.google.com/macros/s/YOUR_APPS_SCRIPT_WEB_APP_URL_HERE/exec";
+
+    function tryParseJSON(text) {
+      try {
+        return JSON.parse(text);
+      } catch (e) {
+        return null;
+      }
+    }
+
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((m) => {
+        m.addedNodes.forEach((node) => {
+          if (node.nodeType !== 1) return;
+          const text = node.innerText;
+          if (!text) return;
+
+          const json = tryParseJSON(text.trim());
+          // wir prüfen auf das Feld "zweck", weil das in unserem Bot immer vorkommt
+          if (json && typeof json === 'object' && ('zweck' in json)) {
+            fetch(GOOGLE_WEBHOOK_URL, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(json)
+            })
+            .then(r => r.json())
+            .then(data => console.log("Lead an Google gesendet:", data))
+            .catch(err => console.error("Fehler beim Senden an Google:", err));
+          }
+        });
+      });
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
+  </script>
+
 </body>
 </html>
+
