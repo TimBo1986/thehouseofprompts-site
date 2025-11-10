@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>TheHouseOfPrompts – KI, Content, Enablement</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root { --page:#f6f0e9; --card:rgba(255,255,255,0.9); --text:#222; }
+    *{box-sizing:border-box}
+    body{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--page);margin:0;color:var(--text);line-height:1.5}
+    nav{max-width:1100px;margin:0 auto;padding:1.25rem 1.25rem 0;display:flex;justify-content:space-between;align-items:center}
+    .nav-links a{margin-left:1rem;text-decoration:none;color:var(--text);font-weight:500}
+    header{max-width:1100px;margin:0 auto;padding:2.5rem 1.25rem 1.5rem}
+    .hero{display:grid;grid-template-columns:1.05fr .95fr;gap:2rem;align-items:center}
+    .badge{display:inline-block;background:rgba(255,255,255,.6);padding:.4rem .8rem;border-radius:999px;font-size:.7rem;text-transform:uppercase;margin-bottom:.8rem;letter-spacing:.02em}
+    h1{font-size:clamp(2.25rem,4vw,3rem);margin:0 0 1rem}
+    .btn-row{display:flex;gap:1rem;flex-wrap:wrap;margin-top:1.5rem}
+    .btn{background:#000;color:#fff;padding:.7rem 1.4rem;border-radius:999px;text-decoration:none;font-weight:500}
+    .btn-secondary{background:#fff;color:#000;border:1px solid rgba(0,0,0,.03)}
+    .card{background:var(--card);border-radius:1.5rem;padding:1.1rem 1.1rem 1.2rem;box-shadow:0 14px 36px rgba(0,0,0,.03)}
+    .subtle{opacity:.65;font-size:.9rem}
+    .highlight-wrap{padding:0 1.25rem 0;max-width:1100px;margin:.5rem auto 0}
+    .highlight-bar{background:rgba(255,255,255,.6);border-radius:1rem;padding:.6rem 1.1rem;display:flex;gap:1rem;align-items:center;flex-wrap:wrap}
+    .highlight-pill{background:rgba(0,0,0,.04);padding:.28rem .9rem;border-radius:999px;font-size:.7rem;font-weight:500}
+    section{max-width:1100px;margin:0 auto;padding:2.8rem 1.25rem}
+    .section-title{font-size:1.6rem;margin-bottom:1.3rem}
+    .tabs-panel{background:rgba(255,255,255,.9);border-radius:1.4rem;padding:1.2rem 1.2rem 1.4rem;box-shadow:0 12px 32px rgba(0,0,0,.02);margin-top:.5rem}
+    .tabs-bar{display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:1rem}
+    .tab-btn{background:rgba(0,0,0,.03);border-radius:999px;padding:.45rem 1rem;cursor:pointer;font-weight:500;transition:.12s}
+    .tab-content{display:none}
+    .tab-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1rem}
+    .tab-card{background:#fff;border-radius:1.2rem;padding:1rem 1rem 1.2rem;box-shadow:0 10px 30px rgba(0,0,0,.01)}
+    .emoji{font-size:1.8rem;margin-bottom:.6rem}
+    #tab-studio:checked ~ .tabs-bar label[for="tab-studio"],
+    #tab-enable:checked ~ .tabs-bar label[for="tab-enable"],
+    #tab-lago:checked   ~ .tabs-bar label[for="tab-lago"]{background:#000;color:#fff}
+    #tab-studio:checked ~ .tabs-panel .studio{display:block}
+    #tab-enable:checked ~ .tabs-panel .enable{display:block}
+    #tab-lago:checked   ~ .tabs-panel .lago{display:block}
+    .org-grid,.team-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.25rem}
+    .team-card img{width:100%;border-radius:1.2rem;margin-bottom:.6rem;object-fit:cover;aspect-ratio:4/3;background:#ddd}
+    footer{margin-top:2.5rem;padding:2rem 1.25rem 3rem;background:#efe6dc}
+    @media (max-width:880px){.hero{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div><strong>TheHouseOfPrompts</strong></div>
+    <div class="nav-links">
+      <a href="#solutions">Lösungen</a>
+      <a href="#workshops">Enablement</a>
+      <a href="#team">Team</a>
+      <a href="#contact">Kontakt</a>
+    </div>
+  </nav>
+
+  <header>
+    <div class="hero">
+      <div>
+        <div class="badge">KI · CONTENT · AUTOMATISIERUNG</div>
+        <h1>KI, die man wirklich nutzen kann.</h1>
+        <p>Wir bauen Assistenten, produzieren KI-Content und machen Teams fit – für Agenturen, Tourismus, Immobilien, KMU und alle, die mehrsprachig arbeiten.</p>
+        <div class="btn-row">
+          <a href="#solutions" class="btn">Unsere Lösungen</a>
+          <a href="#workshops" class="btn btn-secondary">Workshops ansehen</a>
+        </div>
+        <p class="subtle" style="margin-top:1rem;">Studio & Services sind global – dazu kommt unser regionales Playbook für den Gardasee.</p>
+      </div>
+      <div>
+        <div class="card">
+          <h3>IT · DE</h3>
+          <h4 style="margin:.3rem 0 .4rem;">Unsere Stärke</h4>
+          <p>In Italien ansässig, Wurzeln in München – ideal für italienische Betriebe mit DACH-Kunden und umgekehrt.</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="highlight-wrap">
+    <div class="highlight-bar">
+      <span class="highlight-pill">Sitz: Italien</span>
+      <span class="highlight-pill">Herkunft: München / DACH</span>
+      <span class="subtle">→ deshalb Fokus auf mehrsprachige KI & Export-Use-Cases</span>
+    </div>
+  </div>
+
+  <section id="solutions">
+    <h2 class="section-title">Drei Linien – eine Marke.</h2>
+    <p class="subtle">Studio (global) · Workshops (global) · LagoNord AI (regional)</p>
+
+    <input type="radio" id="tab-studio" name="tabs" checked hidden>
+    <input type="radio" id="tab-enable" name="tabs" hidden>
+    <input type="radio" id="tab-lago" name="tabs" hidden>
+
+    <div class="tabs-bar">
+      <label for="tab-studio" class="tab-btn">Studio</label>
+      <label for="tab-enable" class="tab-btn">Workshops & Enablement</label>
+      <label for="tab-lago" class="tab-btn">LagoNord AI (regional)</label>
+    </div>
+
+    <div class="tabs-panel">
+      <div class="tab-content studio">
+        <div class="tab-grid">
+          <div class="tab-card"><div class="emoji">🖼️</div><h3>KI-Bilder & Videos</h3><p>Visuals mit Midjourney, Runway & Co. für Social, Websites, Kampagnen.</p></div>
+          <div class="tab-card"><div class="emoji">✍️</div><h3>KI-Texte & Content (DE/IT/EN)</h3><p>Blog, Landingpages, Social – auch für Export-Unternehmen.</p></div>
+          <div class="tab-card"><div class="emoji">📱</div><h3>GardaWave Social</h3><p>4–16 Posts/Monat, saisonfähig. Auch einzeln buchbar.</p><p class="subtle">Sehr gut für Tourismus & Immo.</p></div>
+          <div class="tab-card"><div class="emoji">🎙️</div><h3>Voice & Audio</h3><p>Mehrsprachige KI-Stimmen für Videos, Immobilien oder Telefon.</p></div>
+          <div class="tab-card"><div class="emoji">🧭</div><h3>KI-Beratung</h3><p>Welche KI passt in euren Betrieb und wie führt ihr sie ein?</p></div>
+        </div>
+      </div>
+
+      <div class="tab-content enable">
+        <div class="tab-grid">
+          <div class="tab-card"><div class="emoji">📘</div><h3>KI Basics (4h)</h3><p>LLM verstehen, sicher nutzen, erste Prompts. Für alle Branchen.</p></div>
+          <div class="tab-card"><div class="emoji">🗂️</div><h3>KI im Arbeitsalltag (1 Tag)</h3><p>Prozesse, Rollen, Automationen. Remote oder vor Ort.</p></div>
+          <div class="tab-card"><div class="emoji">🏁</div><h3>AI for Your Business</h3><p>Tourismus, Immobilien, Industrie – anhand eurer echten Use Cases.</p></div>
+        </div>
+      </div>
+
+      <div class="tab-content lago">
+        <div class="tab-grid">
+          <div class="tab-card"><div class="emoji">⚙️</div><h3>LagoCore AI</h3><p>Mehrsprachiger Basis-Assistent (IT/DE/EN), RAG auf eure Inhalte.</p></div>
+          <div class="tab-card"><div class="emoji">🏨</div><h3>GardaStay AI</h3><p>Hotels, Camping, Verleih – typische Gäste-FAQs automatisiert.</p></div>
+          <div class="tab-card"><div class="emoji">🏡</div><h3>LagoEstate AI</h3><p>Makler & Agenturen – Interessenten vorqualifizieren.</p></div>
+          <div class="tab-card"><div class="emoji">🌉</div><h3>Export / DACH-Connect</h3><p>Für italienische KMU, die mit DACH arbeiten.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section-title">Wie wir aufgestellt sind</h2>
+    <p class="subtle">Eine Marke – drei Bereiche – DE/IT als Brücke.</p>
+    <div class="org-grid">
+      <div class="card"><h3>Studio</h3><p>Content, Visuals, Social, Voice. Lead: Christina.</p></div>
+      <div class="card"><h3>Enablement</h3><p>Workshops & Beratung, global einsetzbar.</p></div>
+      <div class="card"><h3>Regional Solutions</h3><p>LagoNord AI + Export-/DACH-Use-Cases. Lead: Tim.</p></div>
+    </div>
+  </section>
+
+  <section id="team">
+    <h2 class="section-title">Team</h2>
+    <div class="team-grid">
+      <div class="card team-card">
+        <img src="https://www.thehouseofprompts.com/team/cristina.jpg" alt="Christina" />
+        <h3>Christina</h3><p>Gründerin & Head of Studio. KI-Content, Visuals, Social. München → Gardasee.</p>
+      </div>
+      <div class="card team-card">
+        <img src="https://www.thehouseofprompts.com/team/tim.jpg" alt="Tim" />
+        <h3>Tim</h3><p>KI-Agenten & Prozesse. Verbindet italienische Betriebe mit DACH-Anforderungen.</p>
+      </div>
+      <div class="card team-card">
+        <img src="https://www.thehouseofprompts.com/team/luna.jpg" alt="Luna" />
+        <h3>Luna</h3><p>Agenturhund & gute Laune.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <h2 class="section-title">Kontakt</h2>
+    <p>Kurz schreiben, ob es um Studio, Workshops oder LagoNord geht – wir schicken dir den passenden Onboarding-Link.</p>
+  </section>
+
+  <footer>
+    <div style="max-width:1100px;margin:0 auto;">
+      <p><strong>TheHouseOfPrompts</strong> · KI, Content & Enablement</p>
+      <p class="subtle">In Italien zuhause, in München verwurzelt. Ideal für Projekte zwischen IT & DACH.</p>
+    </div>
+  </footer>
+
+  <!-- DIFY BUBBLE EMBED -->
+  <script>
+    window.difyChatbotConfig = {
+      token: '8oS92cO3YCLgidRv',
+      // hier könntest du später user_id o.ä. übergeben
+    }
+  </script>
+  <script src="https://udify.app/embed.min.js" id="8oS92cO3YCLgidRv" defer></script>
+  <style>
+    #dify-chatbot-bubble-button {
+      background-color: #1C64F2 !important;
+    }
+    #dify-chatbot-bubble-window {
+      width: 24rem !important;
+      height: 40rem !important;
+    }
+  </style>
+
+</body>
+</html>
