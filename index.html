@@ -8,14 +8,11 @@
     :root {
       --bg: #f3ede6;
       --card: #ffffff;
-      --accent: #0f172a;
-      --chat: #0f172a;
-      --chat-bg: #ffffff;
     }
     * { box-sizing: border-box; }
     body {
       margin: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont,"Segoe UI",sans-serif;
+      font-family: system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
       background: var(--bg);
     }
     header {
@@ -30,7 +27,7 @@
     main {
       max-width: 1180px;
       margin: 0 auto;
-      padding: 1.75rem 1.25rem 6rem;
+      padding: 1.75rem 1.25rem 5rem;
     }
     .hero {
       display: grid;
@@ -54,86 +51,8 @@
     .prop-body { padding:.9rem .85rem 1rem; }
     footer { text-align:center; font-size:.65rem; color:#777; margin-top:3rem; padding-bottom:4rem; }
 
-    /* unser eigenes Chat-Widget */
-    .custom-chat {
-      position: fixed;
-      right: 1.25rem;
-      bottom: 1.25rem;
-      width: 320px;
-      max-height: 480px;
-      background: var(--chat-bg);
-      border-radius: 1rem;
-      box-shadow: 0 16px 40px rgba(0,0,0,.15);
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-      z-index: 3000;
-      border: 1px solid rgba(0,0,0,.03);
-    }
-    .custom-chat-header {
-      background: #0f172a;
-      color: #fff;
-      padding: .6rem .75rem;
-      font-size: .75rem;
-      display:flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .custom-chat-messages {
-      flex: 1;
-      padding: .7rem .75rem;
-      overflow-y: auto;
-      background: #fcfbf9;
-    }
-    .msg {
-      font-size: .7rem;
-      margin-bottom: .5rem;
-      line-height: 1.4;
-    }
-    .msg.user {
-      text-align: right;
-    }
-    .bubble {
-      display: inline-block;
-      padding: .4rem .55rem;
-      border-radius: .7rem;
-      max-width: 95%;
-    }
-    .bubble.user {
-      background: #0f172a;
-      color: #fff;
-    }
-    .bubble.bot {
-      background: #fff;
-      border: 1px solid rgba(0,0,0,.03);
-    }
-    .custom-chat-input {
-      display: flex;
-      gap: .35rem;
-      padding: .55rem .6rem .6rem;
-      background: #fff;
-      border-top: 1px solid rgba(0,0,0,.04);
-    }
-    .custom-chat-input input {
-      flex:1;
-      border:1px solid rgba(0,0,0,.05);
-      border-radius:.55rem;
-      padding:.4rem .5rem;
-      font-size:.7rem;
-    }
-    .custom-chat-input button {
-      background:#0f172a;
-      color:#fff;
-      border:none;
-      border-radius:.55rem;
-      padding:.35rem .65rem;
-      cursor:pointer;
-      font-size:.7rem;
-    }
-
     @media (max-width: 880px) {
       .hero { grid-template-columns: 1fr; }
-      .custom-chat { right:.5rem; left:.5rem; width:auto; }
     }
   </style>
 </head>
@@ -192,10 +111,10 @@
     </footer>
   </main>
 
-  <!-- Dify-Bubble bleibt (für später) -->
+  <!-- EINZIGER Dify-Chat -->
   <script>
     window.difyChatbotConfig = {
-      token: '8oS92cO3YCLgidRv',
+      token: '8oS92cO3YCLgidRv',   // dein Dify-Token
       systemVariables: {
         user_id: 'demo-user-1'
       }
@@ -208,124 +127,5 @@
       height: 42rem !important;
     }
   </style>
-
-  <!-- Unser eigenes Chat-Widget -->
-  <div class="custom-chat" id="customChat">
-    <div class="custom-chat-header">
-      <span>LagoEstate – KI Demo</span>
-      <span style="font-size:.6rem;opacity:.6">DE / IT / EN</span>
-    </div>
-    <div class="custom-chat-messages" id="chatMessages">
-      <div class="msg">
-        <div class="bubble bot">
-          Ciao 👋 Beschreibe kurz, was du suchst (mieten/kaufen, Ort, Budget) – ich strukturiere es und speichere es.
-        </div>
-      </div>
-    </div>
-    <div class="custom-chat-input">
-      <input id="chatInput" placeholder="Schreibe hier..." />
-      <button id="chatSend">➤</button>
-    </div>
-  </div>
-
-  <script>
-    // 🔐 HIER einsetzen
-    const DIFY_API_KEY = 'app-rhnp3QsOj4yHMLrvmmEEd1GV';  // z.B. app-xxxxxxxx
-    const DIFY_API_URL = 'https://api.dify.ai/v1/chat-messages';
-    const WORKER_URL   = 'https://difymakehelper.uhltim.workers.dev/'; // deine Worker-URL
-    const FIXED_USER_ID = 'demo-user-1'; // damit Dify die Session zuordnen kann
-
-    const chatMessagesEl = document.getElementById('chatMessages');
-    const chatInputEl = document.getElementById('chatInput');
-    const chatSendBtn = document.getElementById('chatSend');
-
-    function appendMessage(text, from='bot') {
-      const wrap = document.createElement('div');
-      wrap.className = 'msg ' + (from === 'user' ? 'user' : '');
-      const bubble = document.createElement('div');
-      bubble.className = 'bubble ' + (from === 'user' ? 'user' : 'bot');
-      bubble.textContent = text;
-      wrap.appendChild(bubble);
-      chatMessagesEl.appendChild(wrap);
-      chatMessagesEl.scrollTop = chatMessagesEl.scrollHeight;
-    }
-
-    // versucht, aus einer Dify-Antwort ein JSON herauszuziehen
-    function extractJSON(text) {
-      const start = text.indexOf('{');
-      const end = text.lastIndexOf('}');
-      if (start !== -1 && end !== -1 && end > start) {
-        try {
-          const jsonStr = text.slice(start, end + 1);
-          return JSON.parse(jsonStr);
-        } catch (e) {
-          return null;
-        }
-      }
-      return null;
-    }
-
-    async function sendToWorkerIfJSON(obj) {
-      try {
-        await fetch(WORKER_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(obj)
-        });
-        appendMessage('Lead wurde ans Sheet geschickt ✅', 'bot');
-      } catch (e) {
-        appendMessage('JSON erkannt, aber Worker nicht erreichbar ❗', 'bot');
-      }
-    }
-
-    async function sendToDify(query) {
-      const payload = {
-        inputs: {},
-        query: query,
-        response_mode: "blocking",
-        user: FIXED_USER_ID
-      };
-
-      const res = await fetch(DIFY_API_URL, {
-        method: 'POST',
-        headers: {
-          'Authorization': 'Bearer ' + DIFY_API_KEY,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(payload)
-      });
-
-      if (!res.ok) {
-        appendMessage('Dify API Fehler: ' + res.status, 'bot');
-        return;
-      }
-      const data = await res.json();
-      // Dify antwortet meist in data.answer
-      const answer = data.answer || '(keine Antwort)';
-      appendMessage(answer, 'bot');
-
-      // prüfen, ob in der Antwort unser strukturiertes JSON steckt
-      const json = extractJSON(answer);
-      if (json) {
-        // direkt an Worker → Make → Sheet
-        sendToWorkerIfJSON(json);
-      }
-    }
-
-    chatSendBtn.addEventListener('click', () => {
-      const text = chatInputEl.value.trim();
-      if (!text) return;
-      appendMessage(text, 'user');
-      chatInputEl.value = '';
-      sendToDify(text);
-    });
-
-    chatInputEl.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') {
-        chatSendBtn.click();
-      }
-    });
-  </script>
-
 </body>
 </html>
