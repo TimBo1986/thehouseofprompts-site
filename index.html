@@ -2,274 +2,356 @@
 <html lang="it">
 <head>
   <meta charset="UTF-8" />
-  <title>Agenzia Lago – Immobili a Sirmione</title>
+  <title>Agenzia Lago – Demo KI-Assistent Immobiliare</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     :root {
-      --bg: #f5f3ef;
+      --bg: #f3ede6;
       --card: #ffffff;
-      --text: #1e272e;
-      --accent: #c66d3a;
-      --line: rgba(0,0,0,.05);
+      --accent: #0f172a;
+      --muted: #8b8b8b;
+      --radius-lg: 1.5rem;
     }
     * { box-sizing: border-box; }
     body {
       margin: 0;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       background: var(--bg);
-      color: var(--text);
+      color: #111;
     }
-    nav {
-      background: #ffffffcc;
-      backdrop-filter: blur(6px);
-      border-bottom: 1px solid #eee;
-      padding: .8rem 1.4rem;
+    header {
+      height: 52px;
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
+      padding: 0 1.5rem;
+      background: #fdfaf7;
+      border-bottom: 1px solid rgba(0,0,0,.03);
     }
-    nav .brand { font-weight: 700; }
-    nav .sub { font-size: .7rem; opacity: .6; }
+    header .brand {
+      font-weight: 600;
+    }
+    main {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 1.75rem 1.25rem 5rem;
+    }
+    .breadcrumbs {
+      font-size: .7rem;
+      color: #555;
+      display: inline-block;
+      background: rgba(255,255,255,.7);
+      padding: .35rem .7rem;
+      border-radius: 999px;
+      margin-bottom: 1rem;
+    }
     .hero {
-      max-width: 1150px;
-      margin: 1.5rem auto 1rem;
-      padding: 0 1.25rem;
       display: grid;
       grid-template-columns: 1.1fr .9fr;
-      gap: 1.5rem;
-      align-items: center;
+      gap: 1.25rem;
+      align-items: stretch;
     }
-    .badge {
-      display: inline-block;
-      background: rgba(198,109,58,.11);
-      color: #8b4b28;
-      padding: .3rem .7rem;
-      border-radius: 999px;
-      font-size: .7rem;
+    .hero-title {
+      font-size: clamp(2.2rem, 3vw, 2.8rem);
+      line-height: 1.05;
       margin-bottom: .7rem;
     }
-    h1 { margin: 0 0 .4rem; font-size: clamp(2.2rem, 4vw, 2.8rem); }
-    .hero p { margin: 0 0 1rem; opacity: .85; }
-    .search-box {
-      background: #fff;
-      border-radius: 1.1rem;
-      padding: .9rem;
+    .hero-sub {
+      color: #444;
+      max-width: 42rem;
+      margin-bottom: 1.2rem;
+    }
+    .search-bar {
       display: flex;
       gap: .5rem;
-      border: 1px solid rgba(0,0,0,.03);
+      flex-wrap: wrap;
     }
-    .search-box input, .search-box select {
-      border: 1px solid rgba(0,0,0,.05);
-      border-radius: .6rem;
-      padding: .4rem .6rem;
-      font-size: .75rem;
-      background: #fff;
-    }
-    .search-box button {
+    .search-bar select,
+    .search-bar input {
       border: none;
-      background: #1e272e;
-      color: #fff;
-      border-radius: .6rem;
-      padding: .45rem .9rem;
-      cursor: pointer;
-      font-size: .74rem;
-    }
-    .img-card {
       background: #fff;
-      border-radius: 1.4rem;
-      min-height: 200px;
-      border: 1px solid rgba(0,0,0,.03);
-      padding: 1rem;
+      border-radius: .65rem;
+      padding: .55rem .8rem;
+      min-width: 130px;
+      font-size: .8rem;
+      outline: none;
     }
-    .listings {
-      max-width: 1150px;
-      margin: 0 auto;
-      padding: 1rem 1.25rem 4rem;
+    .btn-primary {
+      background: #000;
+      color: #fff;
+      border: none;
+      border-radius: .65rem;
+      padding: .55rem 1.1rem;
+      cursor: pointer;
+      font-weight: 500;
     }
-    .section-title {
+    .requests-box {
+      background: #fff;
+      border-radius: 1.2rem;
+      padding: 1rem 1.1rem;
+      box-shadow: 0 14px 40px rgba(0,0,0,.02);
+      min-height: 170px;
+    }
+    .requests-box h3 {
+      margin-top: 0;
+      font-size: 1.05rem;
+      margin-bottom: .4rem;
+    }
+    .requests-box small {
+      color: #888;
+      font-size: .7rem;
+    }
+    .hint-row {
+      margin-top: .7rem;
+      font-size: .75rem;
+      color: #555;
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      margin-bottom: .8rem;
+      gap: .35rem;
     }
-    .cards {
+    .properties-title {
+      margin-top: 2.4rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+    .prop-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1rem;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.1rem;
+      margin-top: 1rem;
     }
-    .card {
-      background: var(--card);
-      border-radius: 1.1rem;
-      padding: .6rem .6rem 1rem;
-      border: 1px solid rgba(0,0,0,.025);
+    .prop-card {
+      background: #fff;
+      border-radius: 1.2rem;
+      overflow: hidden;
+      box-shadow: 0 14px 40px rgba(0,0,0,.02);
+      display: flex;
+      flex-direction: column;
+    }
+    .prop-img {
+      background: linear-gradient(160deg,#edd0ba,#e3bc9d);
+      height: 145px;
+    }
+    .prop-body {
+      padding: .9rem .85rem 1rem;
       display: flex;
       flex-direction: column;
       gap: .35rem;
     }
-    .card-img {
-      background: linear-gradient(150deg, #e3d0c4, #f5e0d4);
-      border-radius: .9rem;
-      aspect-ratio: 16 / 9;
-    }
-    .price { font-weight: 700; }
-    .pill {
-      background: rgba(0,0,0,.045);
-      padding: .15rem .4rem;
+    .prop-tags span {
+      background: rgba(15,23,42,.06);
+      padding: .2rem .5rem;
       border-radius: 999px;
       font-size: .6rem;
-      display: inline-block;
       margin-right: .25rem;
     }
-    footer {
-      border-top: 1px solid rgba(0,0,0,.03);
-      padding: 1.8rem 1.25rem 3.6rem;
-      background: #fff;
-      text-align: center;
-      font-size: .75rem;
-      opacity: .7;
+    .prop-title {
+      font-weight: 600;
+      font-size: .9rem;
     }
-    @media (max-width: 900px) {
-      .hero { grid-template-columns: 1fr; }
-      .search-box { flex-wrap: wrap; }
+    .prop-price {
+      margin-top: .4rem;
+      font-weight: 600;
+    }
+    footer {
+      text-align: center;
+      font-size: .65rem;
+      color: #777;
+      margin-top: 3rem;
+      padding-bottom: 4rem;
+    }
+    @media (max-width: 880px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+      .search-bar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .search-bar select, .search-bar input, .btn-primary {
+        width: 100%;
+      }
+    }
+
+    /* etwas Platz rechts, damit die Dify-Bubble nicht die Karten überlappt */
+    @media (min-width: 1200px) {
+      main { max-width: 1300px; }
     }
   </style>
 </head>
 <body>
 
-  <nav>
-    <div>
-      <div class="brand">Agenzia Lago</div>
-      <div class="sub">Immobili · Sirmione · Desenzano</div>
-    </div>
-    <div style="font-size:.7rem; opacity:.7;">DE / IT · clienti internazionali</div>
-  </nav>
+  <header>
+    <div class="brand">Lago Agency</div>
+    <div style="font-size:.7rem;color:#666">DE / IT · clienti internazionali</div>
+  </header>
 
-  <section class="hero">
-    <div>
-      <div class="badge">Sirmione · Lago di Garda</div>
-      <h1>Trova la tua casa vista lago.</h1>
-      <p>Selezione curata di appartamenti, villette e investimenti turistici. Parliamo italiano, tedesco e inglese.</p>
-      <div class="search-box">
-        <input type="text" placeholder="Località: Sirmione">
-        <select>
-          <option>Tipologia</option>
-          <option>Appartamento</option>
-          <option>Villetta</option>
-          <option>Nuova costruzione</option>
-        </select>
-        <select>
-          <option>Budget</option>
-          <option>&lt; 250.000 €</option>
-          <option>250.000 – 500.000 €</option>
-          <option>&gt; 500.000 €</option>
-        </select>
-        <button>Cerca</button>
+  <main>
+    <div class="breadcrumbs">Sirmione · Lago di Garda</div>
+    <div class="hero">
+      <div>
+        <h1 class="hero-title">Find your lake view home.</h1>
+        <p class="hero-sub">Curated selection of apartments, villas, and tourism investments. We speak Italian, German, and English.</p>
+        <div class="search-bar">
+          <input type="text" placeholder="Location: Sirmione" value="Sirmione" />
+          <select>
+            <option>Typology</option>
+            <option>Appartamento</option>
+            <option>Villa</option>
+            <option>Investimento turistico</option>
+          </select>
+          <select>
+            <option>Budget</option>
+            <option>&lt; €300.000</option>
+            <option>€300.000 – €600.000</option>
+            <option>&gt; €600.000</option>
+          </select>
+          <button class="btn-primary">Near</button>
+        </div>
+        <div class="hint-row">
+          <span style="width:6px;height:6px;background:#5f5ff5;border-radius:999px;display:inline-block"></span>
+          Have questions? Our assistant will answer right away.
+        </div>
       </div>
-      <p style="font-size:.65rem; margin-top:.6rem; opacity:.6;">💬 Hai domande? Il nostro assistente risponde subito.</p>
+      <div class="requests-box">
+        <h3>Today's requests</h3>
+        <p style="font-size:.75rem;line-height:1.4">
+          2x two-room apartment · 1x villa with garden · 1x tourist investment DE
+        </p>
+        <small>The requests from the site will be saved automatically.</small>
+      </div>
     </div>
-    <div class="img-card">
-      <h3 style="margin-top:0;">Richieste di oggi</h3>
-      <p style="font-size:.7rem; opacity:.7;">2x appartamento bilocale · 1x villetta con giardino · 1x investimento turistico 🇩🇪</p>
-      <p style="font-size:.65rem; opacity:.6;">Le richieste dal sito verranno salvate automaticamente.</p>
-    </div>
-  </section>
 
-  <section class="listings">
-    <div class="section-title">
-      <h2 style="margin:0;">Immobili in evidenza</h2>
-      <span style="font-size:.7rem; opacity:.7;">Aggiornati oggi</span>
+    <h2 class="properties-title">Featured Properties</h2>
+    <div class="prop-grid">
+      <div class="prop-card">
+        <div class="prop-img"></div>
+        <div class="prop-body">
+          <div class="prop-tags">
+            <span>Sirmione</span><span>Lake view</span>
+          </div>
+          <div class="prop-title">Modern two-room apartment near the center</div>
+          <div class="prop-price">€285,000</div>
+          <small>Ideal as a holiday home for German clients.</small>
+        </div>
+      </div>
+      <div class="prop-card">
+        <div class="prop-img"></div>
+        <div class="prop-body">
+          <div class="prop-tags">
+            <span>Colombare</span>
+          </div>
+          <div class="prop-title">Villa with garden</div>
+          <div class="prop-price">€520,000</div>
+          <small>3 bedrooms, parking space, quiet location.</small>
+        </div>
+      </div>
+      <div class="prop-card">
+        <div class="prop-img"></div>
+        <div class="prop-body">
+          <div class="prop-tags">
+            <span>Desenzano</span><span>New</span>
+          </div>
+          <div class="prop-title">Penthouse with terrace</div>
+          <div class="prop-price">€790,000</div>
+          <small>Perfect for international customers.</small>
+        </div>
+      </div>
+      <div class="prop-card">
+        <div class="prop-img"></div>
+        <div class="prop-body">
+          <div class="prop-tags">
+            <span>Turismo</span>
+          </div>
+          <div class="prop-title">Tourism investment</div>
+          <div class="prop-price">€340,000</div>
+          <small>Excellent yield for short-term rentals.</small>
+        </div>
+      </div>
     </div>
-    <div class="cards">
-      <div class="card">
-        <div class="card-img"></div>
-        <div class="pill">Sirmione</div>
-        <div class="pill">Vista lago</div>
-        <h3 style="margin:.4rem 0 .1rem;">Bilocale moderno vicino al centro</h3>
-        <p class="price">€ 285.000</p>
-        <p style="font-size:.7rem; opacity:.7;">Ideale come casa vacanza per clienti tedeschi.</p>
-      </div>
-      <div class="card">
-        <div class="card-img"></div>
-        <div class="pill">Colombare</div>
-        <h3 style="margin:.4rem 0 .1rem;">Villetta con giardino</h3>
-        <p class="price">€ 520.000</p>
-        <p style="font-size:.7rem; opacity:.7;">3 camere, posto auto, contesto tranquillo.</p>
-      </div>
-      <div class="card">
-        <div class="card-img"></div>
-        <div class="pill">Desenzano</div>
-        <div class="pill">Nuova</div>
-        <h3 style="margin:.4rem 0 .1rem;">Attico con terrazza</h3>
-        <p class="price">€ 790.000</p>
-        <p style="font-size:.7rem; opacity:.7;">Perfetto per clienti internazionali.</p>
-      </div>
-      <div class="card">
-        <div class="card-img"></div>
-        <div class="pill">Peschiera</div>
-        <h3 style="margin:.4rem 0 .1rem;">Investimento turistico</h3>
-        <p class="price">€ 340.000</p>
-        <p style="font-size:.7rem; opacity:.7;">Ottima resa per affitti brevi.</p>
-      </div>
-    </div>
-  </section>
 
-  <footer>
-    Agenzia Lago · demo KI-Agent für Lead-Erfassung · Sirmione / DACH
-  </footer>
+    <footer>
+      Agenzia Lago – demo KI-Agent für Lead-Erfassung · Sirmione / DACH
+    </footer>
+  </main>
 
-  <!-- DIFY BUBBLE EINBINDUNG – deinen Token einsetzen -->
+  <!-- DIFY BUBBLE EINBINDUNG -->
   <script>
     window.difyChatbotConfig = {
-      token: '8oS92cO3YCLgidRv',
+      token: '8oS92cO3YCLgidRv'   // dein Dify-Token
+      // hier könntest du später user_id etc. setzen
     }
   </script>
-  <script
-    src="https://udify.app/embed.min.js"
-    id="8oS92cO3YCLgidRv"
-    defer>
-  </script>
+  <script src="https://udify.app/embed.min.js" id="8oS92cO3YCLgidRv" defer></script>
+  <style>
+    /* Bubble etwas größer machen */
+    #dify-chatbot-bubble-window {
+      width: 26rem !important;
+      height: 42rem !important;
+    }
+  </style>
 
-  <!-- LISTENER: wartet auf FERTIG + JSON und sendet an deinen Worker -->
+  <!-- SCRIPT: Dify-Chat beobachten und JSON an Cloudflare Worker weiterleiten -->
   <script>
-    // hier deine Cloudflare-Worker-URL eintragen:
-    const WORKER_URL = "https://difymakehelper.uhltim.workers.dev/";
+    // <<< HIER DEINE WORKER-URL EINTRAGEN >>>
+    const WORKER_URL = 'https://difymakehelper.uhltim.workers.dev/';
 
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((m) => {
-        m.addedNodes.forEach((node) => {
-          if (node.nodeType !== 1) return;
-          const text = node.innerText || node.textContent || "";
-          if (!text) return;
+    function extractLeadJson(text) {
+      const match = text.match(/\{[\s\S]*\}/);
+      if (!match) return null;
+      try {
+        return JSON.parse(match[0]);
+      } catch (e) {
+        return null;
+      }
+    }
 
-          if (text.startsWith("FERTIG")) {
-            const jsonStart = text.indexOf("{");
-            const jsonEnd = text.lastIndexOf("}");
-            if (jsonStart !== -1 && jsonEnd !== -1) {
-              const jsonStr = text.slice(jsonStart, jsonEnd + 1);
-              try {
-                const data = JSON.parse(jsonStr);
+    let lastSent = '';
 
-                fetch(WORKER_URL, {
-                  method: "POST",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify(data)
-                }).then(() => {
-                  console.log("Lead an Worker/Makesheet gesendet");
-                }).catch(err => console.error("Fehler beim Senden:", err));
+    function watchDify() {
+      const bubble = document.getElementById('dify-chatbot-bubble-window');
+      if (!bubble) {
+        setTimeout(watchDify, 1000);
+        return;
+      }
 
-              } catch (e) {
-                console.warn("Konnte Bot-JSON nicht parsen", e);
-              }
-            }
+      const observer = new MutationObserver(() => {
+        // alle Elemente durchgehen und schauen, ob irgendwo ein JSON drinsteckt
+        const nodes = bubble.querySelectorAll('*');
+        let foundText = '';
+        nodes.forEach(n => {
+          const t = n.innerText;
+          if (t && t.includes('{') && t.includes('}')) {
+            foundText = t;
           }
         });
-      });
-    });
+        if (!foundText) return;
 
-    observer.observe(document.body, {
-      childList: true,
-      subtree: true
-    });
+        const lead = extractLeadJson(foundText);
+        if (!lead) return;
+
+        const leadStr = JSON.stringify(lead);
+        if (leadStr === lastSent) return;
+
+        // an Worker schicken
+        fetch(WORKER_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: leadStr
+        })
+        .then(res => {
+          console.log('Lead an Worker gesendet:', res.status);
+        })
+        .catch(err => console.error('Fehler beim Senden an Worker', err));
+
+        lastSent = leadStr;
+      });
+
+      observer.observe(bubble, { childList: true, subtree: true });
+      console.log('Dify-Listener aktiv');
+    }
+
+    watchDify();
   </script>
 
 </body>
