@@ -8,12 +8,11 @@
     :root {
       --bg: #f3ede6;
       --card: #ffffff;
-      --accent: #0f172a;
     }
     * { box-sizing: border-box; }
     body {
       margin: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont,"Segoe UI",sans-serif;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       background: var(--bg);
     }
     header {
@@ -35,60 +34,71 @@
       grid-template-columns: 1.1fr .9fr;
       gap: 1.25rem;
     }
-    .hero-title { font-size: clamp(2.2rem,3vw,2.8rem); margin-bottom: .6rem; }
-    .hero-sub { color: #444; margin-bottom: 1rem; }
-    .search-bar { display:flex; gap:.5rem; flex-wrap:wrap; }
-    .search-bar input, .search-bar select, .search-bar button {
-      border:none; border-radius:.6rem; padding:.55rem .8rem; background:#fff;
+    .hero-title {
+      font-size: clamp(2.2rem,3vw,2.8rem);
+      margin-bottom: .6rem;
     }
-    .search-bar button { background:#000; color:#fff; cursor:pointer; }
+    .hero-sub {
+      color: #444;
+      margin-bottom: 1rem;
+    }
+    .search-bar {
+      display:flex;
+      gap:.5rem;
+      flex-wrap:wrap;
+    }
+    .search-bar input,
+    .search-bar select,
+    .search-bar button {
+      border:none;
+      border-radius:.6rem;
+      padding:.55rem .8rem;
+      background:#fff;
+    }
+    .search-bar button {
+      background:#000;
+      color:#fff;
+      cursor:pointer;
+    }
     .requests-box {
-      background:#fff; border-radius:1.2rem; padding:1rem 1.1rem; box-shadow:0 14px 40px rgba(0,0,0,.02);
+      background:#fff;
+      border-radius:1.2rem;
+      padding:1rem 1.1rem;
+      box-shadow:0 14px 40px rgba(0,0,0,.02);
     }
-    .properties-title { margin-top:2.4rem; font-weight:600; }
-    .prop-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:1.1rem; margin-top:1rem; }
-    .prop-card { background:#fff; border-radius:1.2rem; box-shadow:0 14px 40px rgba(0,0,0,.02); overflow:hidden; }
-    .prop-img { height:145px; background:linear-gradient(160deg,#edd0ba,#e3bc9d); }
-    .prop-body { padding:.9rem .85rem 1rem; }
-    footer { text-align:center; font-size:.65rem; color:#777; margin-top:3rem; padding-bottom:4rem; }
+    .properties-title {
+      margin-top:2.4rem;
+      font-weight:600;
+    }
+    .prop-grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+      gap:1.1rem;
+      margin-top:1rem;
+    }
+    .prop-card {
+      background:#fff;
+      border-radius:1.2rem;
+      box-shadow:0 14px 40px rgba(0,0,0,.02);
+      overflow:hidden;
+    }
+    .prop-img {
+      height:145px;
+      background:linear-gradient(160deg,#edd0ba,#e3bc9d);
+    }
+    .prop-body {
+      padding:.9rem .85rem 1rem;
+    }
+    footer {
+      text-align:center;
+      font-size:.65rem;
+      color:#777;
+      margin-top:3rem;
+      padding-bottom:4rem;
+    }
 
-    /* kleines Lead-Panel */
-    .lead-panel {
-      position: fixed;
-      bottom: 1rem;
-      left: 1rem;
-      width: 260px;
-      background: #fff;
-      border-radius: .9rem;
-      box-shadow: 0 16px 40px rgba(0,0,0,.12);
-      padding: .65rem .7rem .7rem;
-      font-size: .7rem;
-      z-index: 2000;
-    }
-    .lead-panel textarea {
-      width: 100%;
-      height: 120px;
-      font-family: ui-monospace, SFMono-Regular, SFMono-Regular, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      font-size: .62rem;
-      border: 1px solid rgba(0,0,0,.05);
-      border-radius: .4rem;
-      background: #f9f7f4;
-    }
-    .lead-panel button {
-      width: 100%;
-      margin-top: .4rem;
-      background: #0f172a;
-      color: #fff;
-      border: none;
-      border-radius: .5rem;
-      padding: .45rem 0;
-      cursor: pointer;
-      font-weight: 500;
-    }
-    .lead-panel small { color:#555; display:block; margin-bottom:.35rem; }
     @media (max-width: 880px) {
       .hero { grid-template-columns: 1fr; }
-      .lead-panel { left: .5rem; right: .5rem; width: auto; }
     }
   </style>
 </head>
@@ -102,39 +112,48 @@
     <div class="hero">
       <div>
         <h1 class="hero-title">Find your lake view home.</h1>
-        <p class="hero-sub">Curated selection of apartments, villas, and tourism investments. We speak Italian, German, and English.</p>
+        <p class="hero-sub">
+          Curated selection of apartments, villas, and tourism investments.
+          We speak Italian, German, and English.
+        </p>
         <div class="search-bar">
-          <input value="Sirmione" />
-          <select><option>Typology</option></select>
-          <select><option>Budget</option></select>
-          <button>Near</button>
+          <input value="Sirmione" aria-label="Località" />
+          <select aria-label="Tipologia">
+            <option>Typology</option>
+          </select>
+          <select aria-label="Budget">
+            <option>Budget</option>
+          </select>
+          <button type="button">Near</button>
         </div>
       </div>
       <div class="requests-box">
-        <h3>Today's requests</h3>
-        <p style="font-size:.75rem">2x two-room apartment · 1x villa with garden · 1x tourist investment DE</p>
-        <small>The requests from the site will be saved automatically.</small>
+        <h3 style="margin-top:0;">Today's requests</h3>
+        <p style="font-size:.75rem">
+          2x two-room apartment · 1x villa with garden · 1x tourist investment DE
+        </p>
+        <small>Le richieste dal sito verranno salvate automaticamente.</small>
       </div>
     </div>
 
     <h2 class="properties-title">Featured properties</h2>
     <div class="prop-grid">
       <div class="prop-card">
-        <div class="prop-img"></div>
+        <div class="prop-img" role="img" aria-label="Modern apartment"></div>
         <div class="prop-body">
           <strong>Modern two-room apartment near the center</strong>
           <div>€285,000</div>
         </div>
       </div>
       <div class="prop-card">
-        <div class="prop-img"></div>
+        <div class="prop-img" role="img" aria-label="Villa with garden"></div>
         <div class="prop-body">
           <strong>Villa with garden</strong>
           <div>€520,000</div>
         </div>
       </div>
       <div class="prop-card">
-        <div class="prop-img"></div>
+        <div class="prop-img" role="img" aria-label="Penthouse with terrace"></div>
         <div class="prop-body">
           <strong>Penthouse with terrace</strong>
           <div>€790,000</div>
@@ -147,13 +166,15 @@
     </footer>
   </main>
 
-  <!-- 1) Dify-Bubble wie gehabt -->
+  <!-- Dify-Bubble mit fester user_id -->
   <script>
     window.difyChatbotConfig = {
-      token: '8oS92cO3YCLgidRv',
+      token: '8oS92cO3YCLgidRv',   // dein Dify-Embed-Token
       systemVariables: {
+        // ganz wichtig: muss zu Make passen
         user_id: 'demo-user-1'
-    }
+      }
+    };
   </script>
   <script src="https://udify.app/embed.min.js" id="8oS92cO3YCLgidRv" defer></script>
   <style>
@@ -162,56 +183,5 @@
       height: 42rem !important;
     }
   </style>
-
-  <!-- 2) kleines „an Worker senden“-Panel -->
-  <div class="lead-panel">
-    <strong>Lead an Sheet senden</strong>
-    <small>JSON hier aus dem Bot reinkopieren ↴</small>
-    <textarea id="leadJson">{
-  "zweck": "MIETEN",
-  "ort": "Garda",
-  "objektart": "Haus",
-  "budget": "1500 Euro",
-  "name": "Tim Uhl",
-  "kontakt": "uhltim@web.de",
-  "offene_frage": "unbekannt"
-}</textarea>
-    <button id="sendBtn">an Worker senden</button>
-    <small id="sendStatus"></small>
-  </div>
-
-  <script>
-    // <<< HIER deine echte Cloudflare-Worker-URL >>>
-    const WORKER_URL = 'https://difymakehelper.uhltim.workers.dev/';
-
-    document.getElementById('sendBtn').addEventListener('click', async () => {
-      const status = document.getElementById('sendStatus');
-      let data;
-      try {
-        data = JSON.parse(document.getElementById('leadJson').value);
-      } catch (e) {
-        status.textContent = 'Kein gültiges JSON.';
-        status.style.color = 'red';
-        return;
-      }
-
-      status.textContent = 'Sende...';
-      status.style.color = '#555';
-
-      try {
-        const res = await fetch(WORKER_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data)
-        });
-        status.textContent = 'FERTIG: ' + res.status;
-        status.style.color = res.ok ? 'green' : 'red';
-      } catch (err) {
-        status.textContent = 'Fehler beim Senden';
-        status.style.color = 'red';
-      }
-    });
-  </script>
-
 </body>
 </html>
