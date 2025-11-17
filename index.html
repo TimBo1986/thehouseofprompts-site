@@ -37,14 +37,89 @@
             background: var(--primary-bg);
         }
 
-        /* Language visibility */
-        [lang="de"] .lang-it,
-        [lang="de"] .lang-en,
-        [lang="it"] .lang-de,
-        [lang="it"] .lang-en,
-        [lang="en"] .lang-de,
-        [lang="en"] .lang-it {
+        /* Language visibility - Default: Hide all language-specific elements */
+        .lang-de,
+        .lang-it,
+        .lang-en {
             display: none !important;
+        }
+
+        /* Show only the matching language */
+        body[lang="de"] .lang-de {
+            display: block !important;
+        }
+
+        body[lang="it"] .lang-it {
+            display: block !important;
+        }
+
+        body[lang="en"] .lang-en {
+            display: block !important;
+        }
+
+        /* For inline elements (links, spans, etc.) */
+        body[lang="de"] a.lang-de,
+        body[lang="de"] span.lang-de,
+        body[lang="de"] label.lang-de,
+        body[lang="de"] h1.lang-de,
+        body[lang="de"] h2.lang-de,
+        body[lang="de"] h3.lang-de,
+        body[lang="de"] h4.lang-de,
+        body[lang="de"] p.lang-de,
+        body[lang="de"] option.lang-de,
+        body[lang="de"] button.lang-de {
+            display: inline !important;
+        }
+
+        body[lang="it"] a.lang-it,
+        body[lang="it"] span.lang-it,
+        body[lang="it"] label.lang-it,
+        body[lang="it"] h1.lang-it,
+        body[lang="it"] h2.lang-it,
+        body[lang="it"] h3.lang-it,
+        body[lang="it"] h4.lang-it,
+        body[lang="it"] p.lang-it,
+        body[lang="it"] option.lang-it,
+        body[lang="it"] button.lang-it {
+            display: inline !important;
+        }
+
+        body[lang="en"] a.lang-en,
+        body[lang="en"] span.lang-en,
+        body[lang="en"] label.lang-en,
+        body[lang="en"] h1.lang-en,
+        body[lang="en"] h2.lang-en,
+        body[lang="en"] h3.lang-en,
+        body[lang="en"] h4.lang-en,
+        body[lang="en"] p.lang-en,
+        body[lang="en"] option.lang-en,
+        body[lang="en"] button.lang-en {
+            display: inline !important;
+        }
+
+        /* Block elements should remain block */
+        body[lang="de"] h1.lang-de,
+        body[lang="de"] h2.lang-de,
+        body[lang="de"] h3.lang-de,
+        body[lang="de"] h4.lang-de,
+        body[lang="de"] p.lang-de {
+            display: block !important;
+        }
+
+        body[lang="it"] h1.lang-it,
+        body[lang="it"] h2.lang-it,
+        body[lang="it"] h3.lang-it,
+        body[lang="it"] h4.lang-it,
+        body[lang="it"] p.lang-it {
+            display: block !important;
+        }
+
+        body[lang="en"] h1.lang-en,
+        body[lang="en"] h2.lang-en,
+        body[lang="en"] h3.lang-en,
+        body[lang="en"] h4.lang-en,
+        body[lang="en"] p.lang-en {
+            display: block !important;
         }
 
         /* ===== HEADER & NAVIGATION ===== */
@@ -572,7 +647,7 @@
             </ul>
 
             <div class="lang-toggle">
-                <span class="lang-option" onclick="switchLanguage('de')" id="lang-de">DE</span>
+                <span class="lang-option active" onclick="switchLanguage('de')" id="lang-de">DE</span>
                 <span style="opacity: 0.3;">|</span>
                 <span class="lang-option" onclick="switchLanguage('it')" id="lang-it">IT</span>
                 <span style="opacity: 0.3;">|</span>
@@ -1421,27 +1496,39 @@
     <script>
         // Language Switching
         function switchLanguage(lang) {
+            console.log('Switching to language:', lang);
+
+            // Set the lang attribute on the body element
             document.body.setAttribute('lang', lang);
+
+            // Store the preference
             localStorage.setItem('preferredLanguage', lang);
 
             // Update active state on toggle buttons
             document.querySelectorAll('.lang-option').forEach(btn => {
                 btn.classList.remove('active');
             });
-            document.getElementById('lang-' + lang).classList.add('active');
+            const activeBtn = document.getElementById('lang-' + lang);
+            if (activeBtn) {
+                activeBtn.classList.add('active');
+            }
 
             // Update select options visibility
             updateSelectOptions(lang);
+
+            console.log('Language switched to:', document.body.getAttribute('lang'));
         }
 
         function updateSelectOptions(lang) {
             const select = document.querySelector('select[name="interest"]');
+            if (!select) return;
+
             const options = select.querySelectorAll('option');
 
             options.forEach(option => {
                 if (option.value === '') {
                     // Show only the matching language placeholder
-                    const isVisible = option.classList.contains('lang-' + lang) || option.getAttribute('value') === '';
+                    const isVisible = option.classList.contains('lang-' + lang);
                     option.style.display = isVisible ? 'block' : 'none';
                 } else {
                     // Show only options matching current language
@@ -1454,6 +1541,7 @@
         // Set initial language on page load
         document.addEventListener('DOMContentLoaded', function() {
             const savedLang = localStorage.getItem('preferredLanguage') || 'de';
+            console.log('Initial language:', savedLang);
             switchLanguage(savedLang);
         });
 
