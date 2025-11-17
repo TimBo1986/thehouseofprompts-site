@@ -1,131 +1,1521 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="de">
 <head>
-  <meta charset="UTF-8" />
-  <title>Agenzia Lago – Demo KI-Assistent Immobiliare</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <style>
-    :root {
-      --bg: #f3ede6;
-      --card: #ffffff;
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-      background: var(--bg);
-    }
-    header {
-      height: 52px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 1.5rem;
-      background: #fdfaf7;
-      border-bottom: 1px solid rgba(0,0,0,.03);
-    }
-    main {
-      max-width: 1180px;
-      margin: 0 auto;
-      padding: 1.75rem 1.25rem 5rem;
-    }
-    .hero {
-      display: grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap: 1.25rem;
-    }
-    .hero-title { font-size: clamp(2.2rem,3vw,2.8rem); margin-bottom: .6rem; }
-    .hero-sub { color: #444; margin-bottom: 1rem; }
-    .search-bar { display:flex; gap:.5rem; flex-wrap:wrap; }
-    .search-bar input, .search-bar select, .search-bar button {
-      border:none; border-radius:.6rem; padding:.55rem .8rem; background:#fff;
-    }
-    .search-bar button { background:#000; color:#fff; cursor:pointer; }
-    .requests-box {
-      background:#fff; border-radius:1.2rem; padding:1rem 1.1rem; box-shadow:0 14px 40px rgba(0,0,0,.02);
-    }
-    .properties-title { margin-top:2.4rem; font-weight:600; }
-    .prop-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:1.1rem; margin-top:1rem; }
-    .prop-card { background:#fff; border-radius:1.2rem; box-shadow:0 14px 40px rgba(0,0,0,.02); overflow:hidden; }
-    .prop-img { height:145px; background:linear-gradient(160deg,#edd0ba,#e3bc9d); }
-    .prop-body { padding:.9rem .85rem 1rem; }
-    footer { text-align:center; font-size:.65rem; color:#777; margin-top:3rem; padding-bottom:4rem; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The House of Prompts - KI-Strategie & LagoNord AI</title>
+    <meta name="description" content="THOP ist Ihr globaler KI-Stratege. Unsere Marke LagoNord AI bietet fertige KI-Lösungen für Tourismus & Immobilien am Gardasee.">
 
-    @media (max-width: 880px) {
-      .hero { grid-template-columns: 1fr; }
-    }
-  </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-bg: #ddc5b6;
+            --accent: #8b6f5c;
+            --text-dark: #2d2d2d;
+            --hover: #a08273;
+            --bg-light: #f0e6dd;
+            --overlay-bg: rgba(221, 197, 182, 0.78);
+            --transition: all 0.3s ease;
+
+            /* Schriften */
+            --headline-font: 'Poppins', sans-serif;
+            --copy-font: 'Roboto', sans-serif;
+        }
+
+        body {
+            font-family: var(--copy-font);
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: var(--primary-bg);
+        }
+
+        /* Language visibility */
+        [lang="de"] .lang-it,
+        [lang="de"] .lang-en,
+        [lang="it"] .lang-de,
+        [lang="it"] .lang-en,
+        [lang="en"] .lang-de,
+        [lang="en"] .lang-it {
+            display: none !important;
+        }
+
+        /* ===== HEADER & NAVIGATION ===== */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: var(--primary-bg);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--headline-font);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        /* Language Toggle */
+        .lang-toggle {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            padding: 0.5rem 1rem;
+            background: var(--primary-bg);
+            border-radius: 25px;
+            cursor: pointer;
+        }
+
+        .lang-option {
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .lang-option:hover {
+            background: var(--primary-bg);
+        }
+
+        .lang-option.active {
+            background: var(--accent);
+            color: #fff;
+            font-weight: 600;
+        }
+
+        /* Mobile Menu */
+        .mobile-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .mobile-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--accent);
+            transition: var(--transition);
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            margin-top: 80px;
+            background: linear-gradient(135deg, #6d5547 0%, #4a3a2f 100%);
+            color: #fff;
+            padding: 5rem 2rem;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-family: var(--headline-font);
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            opacity: 0.85;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: var(--transition);
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: #6d5547;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #fff;
+            border: 2px solid var(--bg-light);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary-bg);
+            color: var(--accent);
+        }
+
+        /* ===== SECTIONS ===== */
+        section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        section:nth-child(even) {
+            background: #f5ebe3;
+        }
+
+        section h2 {
+            font-family: var(--headline-font);
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--accent);
+        }
+
+        section h3 {
+            font-family: var(--headline-font);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        /* ===== BUSINESS AREAS ===== */
+        .business-areas {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .business-card {
+            background: var(--primary-bg);
+            border: 2px solid var(--bg-light);
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .business-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-color: var(--accent);
+        }
+
+        .business-icon {
+            font-family: var(--headline-font);
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        /* ===== VISION SECTION ===== */
+        .vision-section {
+            background: var(--primary-bg);
+            padding: 5rem 2rem;
+            margin: 3rem 0;
+        }
+
+        .vision-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .vision-mockup {
+            max-width: 600px;
+            margin: 2rem auto;
+            text-align: center;
+        }
+
+        .vision-mockup img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+        }
+
+        .vision-pillars {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .pillar {
+            background: var(--primary-bg);
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        /* ===== LAGONORD AI MODULES ===== */
+        .modules-section {
+            background: var(--primary-bg);
+        }
+
+        .accordion {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .accordion-item {
+            background: var(--primary-bg);
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .accordion-header {
+            background: var(--accent);
+            color: #fff;
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: var(--transition);
+        }
+
+        .accordion-header:hover {
+            background: #6d5547;
+        }
+
+        .accordion-content {
+            padding: 2rem;
+            display: none;
+        }
+
+        .accordion-content.active {
+            display: block;
+        }
+
+        .accordion-content img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        /* ===== PROCESS SECTION ===== */
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .process-step {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .process-number {
+            font-family: var(--headline-font);
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary-bg);
+            margin-bottom: 1rem;
+        }
+
+        /* ===== TEAM SECTION ===== */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .team-member {
+            text-align: center;
+            padding: 2rem;
+            background: var(--primary-bg);
+            border-radius: 10px;
+            transition: var(--transition);
+        }
+
+        .team-member:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .team-photo {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            object-fit: cover;
+            border: 4px solid var(--primary-bg);
+        }
+
+        .team-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .team-role {
+            font-weight: 600;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        /* ===== CONTACT FORM ===== */
+        .contact-section {
+            background: var(--primary-bg);
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--primary-bg);
+            border-radius: 5px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: var(--transition);
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: var(--accent);
+            color: #fff;
+            padding: 3rem 2rem 1rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h4 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-section a {
+            color: #fff;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+            opacity: 0.8;
+            transition: var(--transition);
+        }
+
+        .footer-section a:hover {
+            opacity: 1;
+            padding-left: 5px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            opacity: 0.7;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                flex-direction: column;
+                background: var(--primary-bg);
+                width: 100%;
+                padding: 2rem;
+                box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+                transition: var(--transition);
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .mobile-toggle {
+                display: flex;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero .subtitle {
+                font-size: 1.2rem;
+            }
+
+            section h2 {
+                font-size: 2rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+        }
+
+        /* Placeholder for mockup images */
+        .mockup-placeholder {
+            background: linear-gradient(135deg, #e0e0e0 0%, #f5f5f5 100%);
+            border: 2px dashed #999;
+            border-radius: 10px;
+            padding: 3rem;
+            text-align: center;
+            color: #666;
+            font-style: italic;
+        }
+    </style>
 </head>
-<body>
-  <header>
-    <div>Lago Agency</div>
-    <div style="font-size:.7rem;color:#666">DE / IT · clienti internazionali</div>
-  </header>
+<body lang="de">
+    <!-- ===== HEADER ===== -->
+    <header>
+        <nav>
+            <a href="#home" class="logo">The House of Prompts</a>
 
-  <main>
-    <div class="hero">
-      <div>
-        <h1 class="hero-title">Find your lake view home.</h1>
-        <p class="hero-sub">Curated selection of apartments, villas, and tourism investments. We speak Italian, German, and English.</p>
-        <div class="search-bar">
-          <input value="Sirmione" />
-          <select><option>Typology</option></select>
-          <select><option>Budget</option></select>
-          <button>Near</button>
-        </div>
-      </div>
-      <div class="requests-box">
-        <h3>Today's requests</h3>
-        <p style="font-size:.75rem">2x two-room apartment · 1x villa with garden · 1x tourist investment DE</p>
-        <small>The requests from the site will be saved automatically.</small>
-      </div>
-    </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home" class="lang-de">Home</a><a href="#home" class="lang-it">Home</a><a href="#home" class="lang-en">Home</a></li>
+                <li><a href="#lagonord" class="lang-de">LagoNord AI</a><a href="#lagonord" class="lang-it">LagoNord AI</a><a href="#lagonord" class="lang-en">LagoNord AI</a></li>
+                <li><a href="#workshops" class="lang-de">Workshops & Studio</a><a href="#workshops" class="lang-it">Workshop & Studio</a><a href="#workshops" class="lang-en">Workshops & Studio</a></li>
+                <li><a href="#vision" class="lang-de">Vision</a><a href="#vision" class="lang-it">Visione</a><a href="#vision" class="lang-en">Vision</a></li>
+                <li><a href="#team" class="lang-de">Team</a><a href="#team" class="lang-it">Team</a><a href="#team" class="lang-en">Team</a></li>
+                <li><a href="#kontakt" class="lang-de">Kontakt</a><a href="#kontakt" class="lang-it">Contatto</a><a href="#kontakt" class="lang-en">Contact</a></li>
+            </ul>
 
-    <h2 class="properties-title">Featured properties</h2>
-    <div class="prop-grid">
-      <div class="prop-card">
-        <div class="prop-img"></div>
-        <div class="prop-body">
-          <strong>Modern two-room apartment near the center</strong>
-          <div>€285,000</div>
-        </div>
-      </div>
-      <div class="prop-card">
-        <div class="prop-img"></div>
-        <div class="prop-body">
-          <strong>Villa with garden</strong>
-          <div>€520,000</div>
-        </div>
-      </div>
-      <div class="prop-card">
-        <div class="prop-img"></div>
-        <div class="prop-body">
-          <strong>Penthouse with terrace</strong>
-          <div>€790,000</div>
-        </div>
-      </div>
-    </div>
+            <div class="lang-toggle">
+                <span class="lang-option" onclick="switchLanguage('de')" id="lang-de">DE</span>
+                <span style="opacity: 0.3;">|</span>
+                <span class="lang-option" onclick="switchLanguage('it')" id="lang-it">IT</span>
+                <span style="opacity: 0.3;">|</span>
+                <span class="lang-option" onclick="switchLanguage('en')" id="lang-en">EN</span>
+            </div>
 
+            <button class="mobile-toggle" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+
+    <!-- ===== HERO SECTION ===== -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <!-- German -->
+            <h1 class="lang-de">Willkommen bei The House of Prompts</h1>
+            <p class="subtitle lang-de">Ihre globalen KI-Strategen – mit regionalem Herz am Gardasee</p>
+
+            <!-- Italian -->
+            <h1 class="lang-it">Benvenuti a The House of Prompts</h1>
+            <p class="subtitle lang-it">I vostri strateghi AI globali – con il cuore regionale sul Lago di Garda</p>
+
+            <!-- English -->
+            <h1 class="lang-en">Welcome to The House of Prompts</h1>
+            <p class="subtitle lang-en">Your global AI strategists – with a regional heart at Lake Garda</p>
+
+            <p class="lang-de">
+                Wir bringen KI-Innovation in Ihr Unternehmen. Mit <strong>LagoNord AI</strong> bieten wir fertige Lösungen für
+                Immobilien, Tourismus und Personal am Gardasee. Mit <strong>THOP Enablement & Studio</strong> befähigen wir
+                Unternehmen weltweit, KI strategisch zu nutzen.
+            </p>
+            <p class="lang-it">
+                Portiamo l'innovazione AI nella vostra azienda. Con <strong>LagoNord AI</strong> offriamo soluzioni pronte
+                per immobiliare, turismo e personale sul Lago di Garda. Con <strong>THOP Enablement & Studio</strong>
+                abilitiamo aziende in tutto il mondo a utilizzare l'AI strategicamente.
+            </p>
+            <p class="lang-en">
+                We bring AI innovation to your business. With <strong>LagoNord AI</strong> we offer ready-made solutions
+                for real estate, tourism and HR at Lake Garda. With <strong>THOP Enablement & Studio</strong> we enable
+                companies worldwide to use AI strategically.
+            </p>
+
+            <div class="cta-buttons">
+                <a href="#lagonord" class="btn btn-primary lang-de">LagoNord AI: Unsere Gardasee-Lösung</a>
+                <a href="#lagonord" class="btn btn-primary lang-it">LagoNord AI: La nostra soluzione Lago di Garda</a>
+                <a href="#lagonord" class="btn btn-primary lang-en">LagoNord AI: Our Lake Garda Solution</a>
+
+                <a href="#workshops" class="btn btn-secondary lang-de">Alle Services (Workshops & Content)</a>
+                <a href="#workshops" class="btn btn-secondary lang-it">Tutti i servizi (Workshop & Contenuti)</a>
+                <a href="#workshops" class="btn btn-secondary lang-en">All Services (Workshops & Content)</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== 3 BUSINESS AREAS ===== -->
+    <section>
+        <h2 class="lang-de">Unsere drei Geschäftsbereiche</h2>
+        <h2 class="lang-it">Le nostre tre aree di business</h2>
+        <h2 class="lang-en">Our Three Business Areas</h2>
+
+        <div class="business-areas">
+            <!-- LagoNord AI -->
+            <div class="business-card">
+                <div class="business-icon">🏔️</div>
+                <h3>LagoNord AI</h3>
+                <p class="lang-de">
+                    Fertige KI-Assistenten für Immobilien, Hotels und Personal am Gardasee.
+                    "Done-for-you" eingerichtet, sofort einsatzbereit.
+                </p>
+                <p class="lang-it">
+                    Assistenti AI pronti per immobiliare, hotel e personale sul Lago di Garda.
+                    Configurati "chiavi in mano", pronti all'uso.
+                </p>
+                <p class="lang-en">
+                    Ready-made AI assistants for real estate, hotels and HR at Lake Garda.
+                    "Done-for-you" setup, ready to use.
+                </p>
+                <a href="#lagonord" class="btn btn-primary lang-de" style="margin-top: 1rem;">Mehr erfahren</a>
+                <a href="#lagonord" class="btn btn-primary lang-it" style="margin-top: 1rem;">Scopri di più</a>
+                <a href="#lagonord" class="btn btn-primary lang-en" style="margin-top: 1rem;">Learn more</a>
+            </div>
+
+            <!-- THOP Enablement -->
+            <div class="business-card">
+                <div class="business-icon">🎓</div>
+                <h3>THOP Enablement</h3>
+                <p class="lang-de">
+                    KI-Workshops und Strategieberatung für Unternehmen weltweit.
+                    Von Grundlagen bis zur fertigen AI-Strategie.
+                </p>
+                <p class="lang-it">
+                    Workshop AI e consulenza strategica per aziende in tutto il mondo.
+                    Dalle basi alla strategia AI completa.
+                </p>
+                <p class="lang-en">
+                    AI workshops and strategy consulting for companies worldwide.
+                    From basics to complete AI strategy.
+                </p>
+                <a href="#workshops" class="btn btn-primary lang-de" style="margin-top: 1rem;">Mehr erfahren</a>
+                <a href="#workshops" class="btn btn-primary lang-it" style="margin-top: 1rem;">Scopri di più</a>
+                <a href="#workshops" class="btn btn-primary lang-en" style="margin-top: 1rem;">Learn more</a>
+            </div>
+
+            <!-- THOP Studio -->
+            <div class="business-card">
+                <div class="business-icon">✨</div>
+                <h3>THOP Studio</h3>
+                <p class="lang-de">
+                    Mehrsprachige KI-Content-Erstellung: Social Media, Blogs, Visuals.
+                    Perfekt für den DACH-IT-Markt.
+                </p>
+                <p class="lang-it">
+                    Creazione di contenuti AI multilingue: Social Media, Blog, Visual.
+                    Perfetto per il mercato DACH-IT.
+                </p>
+                <p class="lang-en">
+                    Multilingual AI content creation: Social Media, Blogs, Visuals.
+                    Perfect for the DACH-IT market.
+                </p>
+                <a href="#workshops" class="btn btn-primary lang-de" style="margin-top: 1rem;">Mehr erfahren</a>
+                <a href="#workshops" class="btn btn-primary lang-it" style="margin-top: 1rem;">Scopri di più</a>
+                <a href="#workshops" class="btn btn-primary lang-en" style="margin-top: 1rem;">Learn more</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== USP DACH-IT BRIDGE ===== -->
+    <section style="background: var(--primary-bg);">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center;">
+            <div>
+                <h2 style="text-align: left;">
+                    <span class="lang-de">In München verwurzelt. Am Gardasee zuhause.</span>
+                    <span class="lang-it">Radicati a Monaco. A casa sul Lago di Garda.</span>
+                    <span class="lang-en">Rooted in Munich. At home at Lake Garda.</span>
+                </h2>
+                <p class="lang-de">
+                    Wir sind nicht nur Techniker, wir sind Kultur-Vermittler. Als <strong>The House of Prompts</strong>
+                    verstehen wir die Präzisions-Erwartungen des DACH-Marktes. Als <strong>LagoNord AI</strong> leben und
+                    arbeiten wir vor Ort in Italien – wir sprechen die Sprache, kennen die Herausforderungen und bauen
+                    Lösungen, die wirklich funktionieren.
+                </p>
+                <p class="lang-it">
+                    Non siamo solo tecnici, siamo mediatori culturali. Come <strong>The House of Prompts</strong>
+                    comprendiamo le aspettative di precisione del mercato DACH. Come <strong>LagoNord AI</strong> viviamo e
+                    lavoriamo sul posto in Italia – parliamo la lingua, conosciamo le sfide e costruiamo soluzioni che
+                    funzionano davvero.
+                </p>
+                <p class="lang-en">
+                    We're not just technicians, we're cultural mediators. As <strong>The House of Prompts</strong> we
+                    understand the precision expectations of the DACH market. As <strong>LagoNord AI</strong> we live and
+                    work locally in Italy – we speak the language, know the challenges and build solutions that really work.
+                </p>
+            </div>
+            <div>
+                <div class="mockup-placeholder">
+                    <p>🗺️ Visualisierung:<br>DACH ↔ IT Brücke<br>(Grafik/Foto hier einfügen)</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== LAGONORD AI SECTION ===== -->
+    <section id="lagonord">
+        <div style="text-align: center; margin-bottom: 3rem;">
+            <h2>LagoNord AI</h2>
+            <p class="subtitle lang-de" style="color: var(--text-light); font-size: 1.3rem;">
+                Ihr KI-Partner am Gardasee
+            </p>
+            <p class="subtitle lang-it" style="color: var(--text-light); font-size: 1.3rem;">
+                Il vostro partner AI sul Lago di Garda
+            </p>
+            <p class="subtitle lang-en" style="color: var(--text-light); font-size: 1.3rem;">
+                Your AI partner at Lake Garda
+            </p>
+            <p class="lang-de">
+                Fertige Assistenten für Immobilien, Tourismus & Personal. "Done-for-you" eingerichtet.
+            </p>
+            <p class="lang-it">
+                Assistenti pronti per immobiliare, turismo e personale. Configurati "chiavi in mano".
+            </p>
+            <p class="lang-en">
+                Ready-made assistants for real estate, tourism & HR. "Done-for-you" setup.
+            </p>
+        </div>
+
+        <!-- Modules Accordion -->
+        <div class="accordion">
+            <!-- Module 1: LagoEstate AI -->
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>
+                        <span class="lang-de">🏡 LagoEstate AI (Für Makler & Bauträger)</span>
+                        <span class="lang-it">🏡 LagoEstate AI (Per agenti immobiliari e costruttori)</span>
+                        <span class="lang-en">🏡 LagoEstate AI (For real estate agents & developers)</span>
+                    </span>
+                    <span>▼</span>
+                </div>
+                <div class="accordion-content">
+                    <p class="lang-de">
+                        <strong>Stoppt die "Reifen-Kicker".</strong> Unser Assistent qualifiziert Immobilien-Leads
+                        automatisch: Kauf oder Miete? Budget? Gewünschte Lage? Nur ernsthafte Interessenten landen
+                        in Ihrem Postfach. Integration mit WhatsApp Business und Ihrem CRM.
+                    </p>
+                    <p class="lang-it">
+                        <strong>Ferma i "curiosi".</strong> Il nostro assistente qualifica automaticamente i lead
+                        immobiliari: Acquisto o affitto? Budget? Zona desiderata? Solo gli interessati seri arrivano
+                        nella tua casella di posta. Integrazione con WhatsApp Business e il tuo CRM.
+                    </p>
+                    <p class="lang-en">
+                        <strong>Stop the "tire kickers".</strong> Our assistant automatically qualifies real estate leads:
+                        Buy or rent? Budget? Desired location? Only serious prospects land in your inbox.
+                        Integration with WhatsApp Business and your CRM.
+                    </p>
+                    <div class="mockup-placeholder">
+                        <p>📱 WhatsApp Chat Mockup<br>LagoEstate AI in Aktion<br>(Screenshot hier einfügen)</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Module 2: GardaStay AI -->
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>
+                        <span class="lang-de">🏨 GardaStay AI (Für Hotels, Camping, FeWo)</span>
+                        <span class="lang-it">🏨 GardaStay AI (Per hotel, campeggi, case vacanza)</span>
+                        <span class="lang-en">🏨 GardaStay AI (For hotels, campsites, vacation rentals)</span>
+                    </span>
+                    <span>▼</span>
+                </div>
+                <div class="accordion-content">
+                    <p class="lang-de">
+                        Beantwortet Buchungsanfragen automatisch: Hunde erlaubt? Kinderfreundlich? Verfügbarkeit für
+                        bestimmte Daten? Pool? Parkplatz? Ihr Bot arbeitet 24/7 auf Deutsch und Italienisch und
+                        leitet qualifizierte Anfragen an Ihr Team weiter.
+                    </p>
+                    <p class="lang-it">
+                        Risponde automaticamente alle richieste di prenotazione: Animali ammessi? Adatto ai bambini?
+                        Disponibilità per date specifiche? Piscina? Parcheggio? Il tuo bot lavora 24/7 in tedesco e
+                        italiano e inoltra le richieste qualificate al tuo team.
+                    </p>
+                    <p class="lang-en">
+                        Answers booking inquiries automatically: Dogs allowed? Child-friendly? Availability for
+                        specific dates? Pool? Parking? Your bot works 24/7 in German and Italian and forwards
+                        qualified inquiries to your team.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Module 3: HR & Seasonal Staff Bot -->
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>
+                        <span class="lang-de">👥 HR & Saisonkräfte Bot (Für alle Betriebe)</span>
+                        <span class="lang-it">👥 Bot HR & Personale Stagionale (Per tutte le aziende)</span>
+                        <span class="lang-en">👥 HR & Seasonal Staff Bot (For all businesses)</span>
+                    </span>
+                    <span>▼</span>
+                </div>
+                <div class="accordion-content">
+                    <p class="lang-de">
+                        Der digitale Personal-Filter. Qualifiziert Bewerber automatisch: Welche Position? Welche
+                        Sprachen? Unterkunft benötigt? Verfügbarkeit? Spart 80% Verwaltungszeit in der Hochsaison.
+                    </p>
+                    <p class="lang-it">
+                        Il filtro digitale del personale. Qualifica automaticamente i candidati: Quale posizione?
+                        Quali lingue? Necessità di alloggio? Disponibilità? Risparmia l'80% del tempo amministrativo
+                        in alta stagione.
+                    </p>
+                    <p class="lang-en">
+                        The digital personnel filter. Automatically qualifies applicants: Which position? Which
+                        languages? Accommodation needed? Availability? Saves 80% administrative time during peak season.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Module 4: Reputation Manager -->
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>
+                        <span class="lang-de">⭐ Reputation Manager (Google & Booking.com)</span>
+                        <span class="lang-it">⭐ Reputation Manager (Google e Booking.com)</span>
+                        <span class="lang-en">⭐ Reputation Manager (Google & Booking.com)</span>
+                    </span>
+                    <span>▼</span>
+                </div>
+                <div class="accordion-content">
+                    <p class="lang-de">
+                        Automatische Antworten auf Gästebewertungen – persönlich und professionell.
+                        Zweisprachig (DE/IT) auf Google, Booking.com und TripAdvisor.
+                    </p>
+                    <p class="lang-it">
+                        Risposte automatiche alle recensioni degli ospiti – personali e professionali.
+                        Bilingue (DE/IT) su Google, Booking.com e TripAdvisor.
+                    </p>
+                    <p class="lang-en">
+                        Automatic responses to guest reviews – personal and professional.
+                        Bilingual (DE/IT) on Google, Booking.com and TripAdvisor.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Module 5: Guest Care Bot -->
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>
+                        <span class="lang-de">💬 Guest Care Bot (Während des Aufenthalts)</span>
+                        <span class="lang-it">💬 Guest Care Bot (Durante il soggiorno)</span>
+                        <span class="lang-en">💬 Guest Care Bot (During the stay)</span>
+                    </span>
+                    <span>▼</span>
+                </div>
+                <div class="accordion-content">
+                    <p class="lang-de">
+                        Beantwortet Gästefragen während des Aufenthalts: WLAN-Passwort? Check-out Zeit?
+                        Restaurant-Empfehlungen? Entlastet Ihre Rezeption.
+                    </p>
+                    <p class="lang-it">
+                        Risponde alle domande degli ospiti durante il soggiorno: Password WiFi? Orario di check-out?
+                        Raccomandazioni ristoranti? Alleggerisce il carico della reception.
+                    </p>
+                    <p class="lang-en">
+                        Answers guest questions during their stay: WiFi password? Check-out time?
+                        Restaurant recommendations? Relieves your front desk.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Module 6: DACH-Connect -->
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>
+                        <span class="lang-de">🇩🇪🇦🇹🇨🇭 DACH-Connect (Für B2B-Partner)</span>
+                        <span class="lang-it">🇩🇪🇦🇹🇨🇭 DACH-Connect (Per partner B2B)</span>
+                        <span class="lang-en">🇩🇪🇦🇹🇨🇭 DACH-Connect (For B2B partners)</span>
+                    </span>
+                    <span>▼</span>
+                </div>
+                <div class="accordion-content">
+                    <p class="lang-de">
+                        Speziell für Reiseveranstalter und Busunternehmen aus dem DACH-Raum.
+                        Automatisierte Gruppen-Anfragen-Bearbeitung.
+                    </p>
+                    <p class="lang-it">
+                        Appositamente per tour operator e compagnie di autobus dalla regione DACH.
+                        Elaborazione automatizzata delle richieste di gruppo.
+                    </p>
+                    <p class="lang-en">
+                        Especially for tour operators and bus companies from the DACH region.
+                        Automated group inquiry processing.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Process Steps -->
+        <div style="margin-top: 5rem;">
+            <h3 style="text-align: center;">
+                <span class="lang-de">Kein Stress. Nur Resultate.</span>
+                <span class="lang-it">Niente stress. Solo risultati.</span>
+                <span class="lang-en">No stress. Just results.</span>
+            </h3>
+            <div class="process-steps">
+                <div class="process-step">
+                    <div class="process-number">1</div>
+                    <h4 class="lang-de">Analyse</h4>
+                    <h4 class="lang-it">Analisi</h4>
+                    <h4 class="lang-en">Analysis</h4>
+                    <p class="lang-de">Wir analysieren Ihr Problem vor Ort.</p>
+                    <p class="lang-it">Analizziamo il vostro problema sul posto.</p>
+                    <p class="lang-en">We analyze your problem on-site.</p>
+                </div>
+                <div class="process-step">
+                    <div class="process-number">2</div>
+                    <h4 class="lang-de">Setup</h4>
+                    <h4 class="lang-it">Configurazione</h4>
+                    <h4 class="lang-en">Setup</h4>
+                    <p class="lang-de">Wir konfigurieren Ihr Modul und die Automation.</p>
+                    <p class="lang-it">Configuriamo il vostro modulo e l'automazione.</p>
+                    <p class="lang-en">We configure your module and automation.</p>
+                </div>
+                <div class="process-step">
+                    <div class="process-number">3</div>
+                    <h4 class="lang-de">Betreuung</h4>
+                    <h4 class="lang-it">Assistenza</h4>
+                    <h4 class="lang-en">Support</h4>
+                    <p class="lang-de">Wir kümmern uns um die monatliche Pflege.</p>
+                    <p class="lang-it">Ci occupiamo della manutenzione mensile.</p>
+                    <p class="lang-en">We take care of monthly maintenance.</p>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 3rem;">
+                <a href="#kontakt" class="btn btn-primary lang-de">Demo für LagoNord AI anfragen</a>
+                <a href="#kontakt" class="btn btn-primary lang-it">Richiedi demo per LagoNord AI</a>
+                <a href="#kontakt" class="btn btn-primary lang-en">Request demo for LagoNord AI</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== WORKSHOPS & STUDIO SECTION ===== -->
+    <section id="workshops" style="background: var(--primary-bg);">
+        <h2>
+            <span class="lang-de">THOP Enablement & Studio</span>
+            <span class="lang-it">THOP Enablement & Studio</span>
+            <span class="lang-en">THOP Enablement & Studio</span>
+        </h2>
+        <p class="subtitle lang-de" style="text-align: center; color: var(--text-light); font-size: 1.2rem;">
+            Globale KI-Strategien, Workshops und Content (DE/IT/EN)
+        </p>
+        <p class="subtitle lang-it" style="text-align: center; color: var(--text-light); font-size: 1.2rem;">
+            Strategie AI globali, workshop e contenuti (DE/IT/EN)
+        </p>
+        <p class="subtitle lang-en" style="text-align: center; color: var(--text-light); font-size: 1.2rem;">
+            Global AI strategies, workshops and content (DE/IT/EN)
+        </p>
+
+        <div style="margin-top: 4rem;">
+            <h3 style="text-align: center; margin-bottom: 2rem;">
+                <span class="lang-de">🎓 THOP Enablement (Workshops)</span>
+                <span class="lang-it">🎓 THOP Enablement (Workshop)</span>
+                <span class="lang-en">🎓 THOP Enablement (Workshops)</span>
+            </h3>
+            <div class="business-areas">
+                <div class="business-card">
+                    <h4 class="lang-de">KI-Grundlagen (4 Stunden)</h4>
+                    <h4 class="lang-it">Fondamenti di AI (4 ore)</h4>
+                    <h4 class="lang-en">AI Basics (4 hours)</h4>
+                    <p class="lang-de">
+                        Sicherer Umgang mit KI-Tools, Ängste abbauen, praktische erste Schritte für Ihr Team.
+                    </p>
+                    <p class="lang-it">
+                        Uso sicuro degli strumenti AI, ridurre le paure, primi passi pratici per il vostro team.
+                    </p>
+                    <p class="lang-en">
+                        Safe use of AI tools, reduce fears, practical first steps for your team.
+                    </p>
+                </div>
+                <div class="business-card">
+                    <h4 class="lang-de">KI im Arbeitsalltag (1 Tag)</h4>
+                    <h4 class="lang-it">AI nel lavoro quotidiano (1 giorno)</h4>
+                    <h4 class="lang-en">AI in Daily Work (1 day)</h4>
+                    <p class="lang-de">
+                        Prozesse identifizieren, die richtige Tools finden, Effizienz-Gewinne realisieren.
+                    </p>
+                    <p class="lang-it">
+                        Identificare i processi, trovare gli strumenti giusti, realizzare guadagni di efficienza.
+                    </p>
+                    <p class="lang-en">
+                        Identify processes, find the right tools, realize efficiency gains.
+                    </p>
+                </div>
+                <div class="business-card">
+                    <h4 class="lang-de">AI Strategy (2 Tage)</h4>
+                    <h4 class="lang-it">Strategia AI (2 giorni)</h4>
+                    <h4 class="lang-en">AI Strategy (2 days)</h4>
+                    <p class="lang-de">
+                        Use Cases entwickeln, Prototypen bauen, Roadmap erstellen. Von der Idee zur Umsetzung.
+                    </p>
+                    <p class="lang-it">
+                        Sviluppare use case, costruire prototipi, creare roadmap. Dall'idea all'implementazione.
+                    </p>
+                    <p class="lang-en">
+                        Develop use cases, build prototypes, create roadmap. From idea to implementation.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-top: 4rem;">
+            <h3 style="text-align: center; margin-bottom: 2rem;">
+                <span class="lang-de">✨ THOP Studio (Content)</span>
+                <span class="lang-it">✨ THOP Studio (Contenuti)</span>
+                <span class="lang-en">✨ THOP Studio (Content)</span>
+            </h3>
+            <div style="max-width: 800px; margin: 0 auto; text-align: center;">
+                <p class="lang-de">
+                    Wir erstellen Ihre mehrsprachigen Social-Media-Posts, Blog-Artikel oder KI-Visuals für
+                    Ihre Exposés und Hotel-Websites. Perfekt für den DACH-IT-Markt: Native Inhalte ohne
+                    Übersetzungsfehler, kulturell passend und überzeugend.
+                </p>
+                <p class="lang-it">
+                    Creiamo i vostri post sui social media multilingue, articoli di blog o visual AI per
+                    le vostre schede immobiliari e siti web di hotel. Perfetto per il mercato DACH-IT:
+                    contenuti nativi senza errori di traduzione, culturalmente appropriati e convincenti.
+                </p>
+                <p class="lang-en">
+                    We create your multilingual social media posts, blog articles or AI visuals for
+                    your property listings and hotel websites. Perfect for the DACH-IT market:
+                    native content without translation errors, culturally appropriate and convincing.
+                </p>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 3rem;">
+            <a href="#kontakt" class="btn btn-primary lang-de">Workshop oder Content anfragen</a>
+            <a href="#kontakt" class="btn btn-primary lang-it">Richiedi workshop o contenuti</a>
+            <a href="#kontakt" class="btn btn-primary lang-en">Request workshop or content</a>
+        </div>
+    </section>
+
+    <!-- ===== VISION SECTION ===== -->
+    <section id="vision" class="vision-section">
+        <div class="vision-content">
+            <h2>
+                <span class="lang-de">Unsere Vision: Die exklusive Brücke</span>
+                <span class="lang-it">La nostra visione: Il ponte esclusivo</span>
+                <span class="lang-en">Our Vision: The Exclusive Bridge</span>
+            </h2>
+
+            <p class="lang-de" style="font-size: 1.1rem; text-align: center; margin-bottom: 2rem;">
+                Als <strong>The House of Prompts</strong> ist unsere Mission, KI greifbar und nutzbar zu machen.
+                Mit <strong>LagoNord AI</strong> bringen wir diese Expertise an den Gardasee.
+            </p>
+            <p class="lang-it" style="font-size: 1.1rem; text-align: center; margin-bottom: 2rem;">
+                Come <strong>The House of Prompts</strong> la nostra missione è rendere l'AI tangibile e utilizzabile.
+                Con <strong>LagoNord AI</strong> portiamo questa esperienza sul Lago di Garda.
+            </p>
+            <p class="lang-en" style="font-size: 1.1rem; text-align: center; margin-bottom: 2rem;">
+                As <strong>The House of Prompts</strong> our mission is to make AI tangible and usable.
+                With <strong>LagoNord AI</strong> we bring this expertise to Lake Garda.
+            </p>
+
+            <div class="vision-mockup">
+                <div class="mockup-placeholder">
+                    <p>💻 LagoNord OS Dashboard<br>Das B2B-Cockpit<br>(Laptop-Mockup hier einfügen)</p>
+                </div>
+            </div>
+
+            <h3 style="text-align: center; margin: 3rem 0 2rem;">
+                <span class="lang-de">Die Zukunft: Bereit für "Garda Connect"?</span>
+                <span class="lang-it">Il futuro: Pronti per "Garda Connect"?</span>
+                <span class="lang-en">The Future: Ready for "Garda Connect"?</span>
+            </h3>
+
+            <p class="lang-de" style="text-align: center; margin-bottom: 2rem;">
+                Unser strategisches Ziel ist es, die exklusive technische Brücke zur aufstrebenden
+                Touristen-Plattform <strong>"Garda Connect"</strong> zu sein. Unsere <strong>LagoNord OS</strong>-Plattform
+                wird der einzige Weg für Betriebe sein, Anfragen von dieser App zu empfangen.
+            </p>
+            <p class="lang-it" style="text-align: center; margin-bottom: 2rem;">
+                Il nostro obiettivo strategico è essere il ponte tecnico esclusivo verso la piattaforma
+                turistica emergente <strong>"Garda Connect"</strong>. La nostra piattaforma <strong>LagoNord OS</strong>
+                sarà l'unico modo per le aziende di ricevere richieste da questa app.
+            </p>
+            <p class="lang-en" style="text-align: center; margin-bottom: 2rem;">
+                Our strategic goal is to be the exclusive technical bridge to the emerging
+                tourist platform <strong>"Garda Connect"</strong>. Our <strong>LagoNord OS</strong> platform
+                will be the only way for businesses to receive inquiries from this app.
+            </p>
+
+            <div class="vision-pillars">
+                <div class="pillar">
+                    <h4>1</h4>
+                    <h4 class="lang-de">Ihr "LagoNord OS"</h4>
+                    <h4 class="lang-it">Il vostro "LagoNord OS"</h4>
+                    <h4 class="lang-en">Your "LagoNord OS"</h4>
+                    <p class="lang-de">Ihr B2B-Cockpit für alle KI-Module und Lead-Kanäle.</p>
+                    <p class="lang-it">Il vostro cockpit B2B per tutti i moduli AI e i canali di lead.</p>
+                    <p class="lang-en">Your B2B cockpit for all AI modules and lead channels.</p>
+                </div>
+                <div class="pillar">
+                    <h4>2</h4>
+                    <h4 class="lang-de">Die "Garda Connect App"</h4>
+                    <h4 class="lang-it">L'app "Garda Connect"</h4>
+                    <h4 class="lang-en">The "Garda Connect App"</h4>
+                    <p class="lang-de">Das B2C-Frontend für Millionen von Touristen.</p>
+                    <p class="lang-it">Il frontend B2C per milioni di turisti.</p>
+                    <p class="lang-en">The B2C frontend for millions of tourists.</p>
+                </div>
+                <div class="pillar">
+                    <h4>3</h4>
+                    <h4 class="lang-de">Unsere "Insights-Brücke"</h4>
+                    <h4 class="lang-it">Il nostro "Ponte Insights"</h4>
+                    <h4 class="lang-en">Our "Insights Bridge"</h4>
+                    <p class="lang-de">Die exklusive API, die beide Welten verbindet.</p>
+                    <p class="lang-it">L'API esclusiva che connette entrambi i mondi.</p>
+                    <p class="lang-en">The exclusive API that connects both worlds.</p>
+                </div>
+            </div>
+
+            <div class="vision-mockup" style="margin-top: 3rem;">
+                <div class="mockup-placeholder">
+                    <p>📱 Garda Connect App Mockup<br>Die Touristen-App der Zukunft<br>(Handy-Mockup hier einfügen)</p>
+                </div>
+            </div>
+
+            <p class="lang-de" style="text-align: center; margin-top: 3rem; font-size: 1.1rem; font-weight: 600;">
+                Ein <strong>LagoNord AI</strong>-Modul ist Ihr Eintrittsschlüssel.
+                Sie lösen heute ein Problem und sind bereit für die Leads von morgen.
+            </p>
+            <p class="lang-it" style="text-align: center; margin-top: 3rem; font-size: 1.1rem; font-weight: 600;">
+                Un modulo <strong>LagoNord AI</strong> è il vostro biglietto d'ingresso.
+                Risolvete un problema oggi e siete pronti per i lead di domani.
+            </p>
+            <p class="lang-en" style="text-align: center; margin-top: 3rem; font-size: 1.1rem; font-weight: 600;">
+                A <strong>LagoNord AI</strong> module is your entry ticket.
+                You solve a problem today and are ready for tomorrow's leads.
+            </p>
+
+            <div style="text-align: center; margin-top: 2rem;">
+                <a href="#kontakt" class="btn btn-primary lang-de">Mehr über unsere Vision erfahren</a>
+                <a href="#kontakt" class="btn btn-primary lang-it">Scopri di più sulla nostra visione</a>
+                <a href="#kontakt" class="btn btn-primary lang-en">Learn more about our vision</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== TEAM SECTION ===== -->
+    <section id="team">
+        <h2>
+            <span class="lang-de">Unser Team</span>
+            <span class="lang-it">Il nostro team</span>
+            <span class="lang-en">Our Team</span>
+        </h2>
+        <p class="subtitle lang-de" style="text-align: center; color: var(--text-light); margin-bottom: 3rem;">
+            Von München an den Gardasee
+        </p>
+        <p class="subtitle lang-it" style="text-align: center; color: var(--text-light); margin-bottom: 3rem;">
+            Da Monaco al Lago di Garda
+        </p>
+        <p class="subtitle lang-en" style="text-align: center; color: var(--text-light); margin-bottom: 3rem;">
+            From Munich to Lake Garda
+        </p>
+
+        <div class="team-grid">
+            <!-- Christina -->
+            <div class="team-member">
+                <img src="https://u.jimdo.com/cms/o/se65a96f0a90db776/img/i0e19d6dd12875e28/1729938836/std/image.jpg"
+                     alt="Christina" class="team-photo">
+                <div class="team-name">Christina</div>
+                <div class="team-role lang-de">Co-Founder & Kreativdirektorin</div>
+                <div class="team-role lang-it">Co-Fondatrice & Direttrice Creativa</div>
+                <div class="team-role lang-en">Co-Founder & Creative Director</div>
+                <p class="lang-de">
+                    Expertin für KI-Content und Social Media. Bringt kreative Visionen mit technischer Präzision zusammen.
+                </p>
+                <p class="lang-it">
+                    Esperta di contenuti AI e social media. Unisce visioni creative con precisione tecnica.
+                </p>
+                <p class="lang-en">
+                    Expert in AI content and social media. Combines creative visions with technical precision.
+                </p>
+            </div>
+
+            <!-- Tim -->
+            <div class="team-member">
+                <img src="https://u.jimdo.com/cms/o/se65a96f0a90db776/img/i166b23cc19ba2d37/1729938836/std/image.jpg"
+                     alt="Tim" class="team-photo">
+                <div class="team-name">Tim</div>
+                <div class="team-role lang-de">Co-Founder & Tech Lead</div>
+                <div class="team-role lang-it">Co-Fondatore & Tech Lead</div>
+                <div class="team-role lang-en">Co-Founder & Tech Lead</div>
+                <p class="lang-de">
+                    Entwickler und KI-Stratege. Baut die technischen Lösungen, die LagoNord AI zum Leben erwecken.
+                </p>
+                <p class="lang-it">
+                    Sviluppatore e stratega AI. Costruisce le soluzioni tecniche che danno vita a LagoNord AI.
+                </p>
+                <p class="lang-en">
+                    Developer and AI strategist. Builds the technical solutions that bring LagoNord AI to life.
+                </p>
+            </div>
+
+            <!-- Luna -->
+            <div class="team-member">
+                <img src="https://u.jimdo.com/cms/o/se65a96f0a90db776/img/i2fce18d48e5f7d56/1729938836/std/image.jpg"
+                     alt="Luna" class="team-photo">
+                <div class="team-name">Luna</div>
+                <div class="team-role lang-de">Chief Happiness Officer</div>
+                <div class="team-role lang-it">Chief Happiness Officer</div>
+                <div class="team-role lang-en">Chief Happiness Officer</div>
+                <p class="lang-de">
+                    Sorgt für gute Stimmung im Team und begleitet uns bei Kundenterminen am Gardasee.
+                </p>
+                <p class="lang-it">
+                    Assicura un'atmosfera positiva nel team e ci accompagna agli appuntamenti con i clienti sul Lago di Garda.
+                </p>
+                <p class="lang-en">
+                    Ensures a positive atmosphere in the team and accompanies us to client meetings at Lake Garda.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CONTACT SECTION ===== -->
+    <section id="kontakt" class="contact-section">
+        <h2>
+            <span class="lang-de">Lassen Sie uns sprechen</span>
+            <span class="lang-it">Parliamone</span>
+            <span class="lang-en">Let's Talk</span>
+        </h2>
+        <p class="subtitle lang-de" style="text-align: center; color: var(--text-light); margin-bottom: 3rem;">
+            Buchen Sie eine 15-minütige, kostenlose Demo oder ein Strategiegespräch
+        </p>
+        <p class="subtitle lang-it" style="text-align: center; color: var(--text-light); margin-bottom: 3rem;">
+            Prenota una demo gratuita di 15 minuti o una consulenza strategica
+        </p>
+        <p class="subtitle lang-en" style="text-align: center; color: var(--text-light); margin-bottom: 3rem;">
+            Book a free 15-minute demo or strategy consultation
+        </p>
+
+        <form class="contact-form" id="contactForm">
+            <div class="form-group">
+                <label class="lang-de">Name *</label>
+                <label class="lang-it">Nome *</label>
+                <label class="lang-en">Name *</label>
+                <input type="text" name="name" required>
+            </div>
+
+            <div class="form-group">
+                <label>E-Mail *</label>
+                <input type="email" name="email" required>
+            </div>
+
+            <div class="form-group">
+                <label class="lang-de">Ihr Betrieb (Name)</label>
+                <label class="lang-it">La vostra azienda (Nome)</label>
+                <label class="lang-en">Your Business (Name)</label>
+                <input type="text" name="business">
+            </div>
+
+            <div class="form-group">
+                <label class="lang-de">Wofür interessieren Sie sich? *</label>
+                <label class="lang-it">Cosa vi interessa? *</label>
+                <label class="lang-en">What are you interested in? *</label>
+                <select name="interest" required>
+                    <option value="" class="lang-de">Bitte wählen...</option>
+                    <option value="" class="lang-it">Seleziona...</option>
+                    <option value="" class="lang-en">Please select...</option>
+
+                    <option value="demo-lagonord" class="lang-de">Demo: LagoNord AI (Gardasee-Lösung)</option>
+                    <option value="demo-lagonord" class="lang-it">Demo: LagoNord AI (Soluzione Lago di Garda)</option>
+                    <option value="demo-lagonord" class="lang-en">Demo: LagoNord AI (Lake Garda Solution)</option>
+
+                    <option value="workshop" class="lang-de">Info: THOP Workshop (Global)</option>
+                    <option value="workshop" class="lang-it">Info: Workshop THOP (Globale)</option>
+                    <option value="workshop" class="lang-en">Info: THOP Workshop (Global)</option>
+
+                    <option value="studio" class="lang-de">Info: THOP Studio (Content)</option>
+                    <option value="studio" class="lang-it">Info: THOP Studio (Contenuti)</option>
+                    <option value="studio" class="lang-en">Info: THOP Studio (Content)</option>
+
+                    <option value="vision" class="lang-de">Info: Unsere "Garda Connect"-Vision</option>
+                    <option value="vision" class="lang-it">Info: La nostra visione "Garda Connect"</option>
+                    <option value="vision" class="lang-en">Info: Our "Garda Connect" Vision</option>
+
+                    <option value="other" class="lang-de">Sonstiges</option>
+                    <option value="other" class="lang-it">Altro</option>
+                    <option value="other" class="lang-en">Other</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="lang-de">Ihre Nachricht</label>
+                <label class="lang-it">Il vostro messaggio</label>
+                <label class="lang-en">Your Message</label>
+                <textarea name="message"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%;">
+                <span class="lang-de">Anfrage senden</span>
+                <span class="lang-it">Invia richiesta</span>
+                <span class="lang-en">Send Request</span>
+            </button>
+        </form>
+
+        <div style="text-align: center; margin-top: 3rem;">
+            <p class="lang-de">
+                📞 Oder rufen Sie uns direkt an: <strong>+39 XXX XXX XXXX</strong><br>
+                📧 E-Mail: <strong>info@thehouseofprompts.com</strong>
+            </p>
+            <p class="lang-it">
+                📞 Oppure chiamateci direttamente: <strong>+39 XXX XXX XXXX</strong><br>
+                📧 Email: <strong>info@thehouseofprompts.com</strong>
+            </p>
+            <p class="lang-en">
+                📞 Or call us directly: <strong>+39 XXX XXX XXXX</strong><br>
+                📧 Email: <strong>info@thehouseofprompts.com</strong>
+            </p>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
     <footer>
-      Agenzia Lago – demo KI-Agent für Lead-Erfassung · Sirmione / DACH
-    </footer>
-  </main>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>The House of Prompts</h4>
+                <p class="lang-de">
+                    Spezialisierte KI-Agentur für globale Strategie und regionale Lösungen am Gardasee.
+                </p>
+                <p class="lang-it">
+                    Agenzia AI specializzata per strategia globale e soluzioni regionali sul Lago di Garda.
+                </p>
+                <p class="lang-en">
+                    Specialized AI agency for global strategy and regional solutions at Lake Garda.
+                </p>
+            </div>
 
-  <!-- EINZIGER Dify-Chat -->
-  <script>
-    window.difyChatbotConfig = {
-      token: '8oS92cO3YCLgidRv',   // dein Dify-Token
-      systemVariables: {
-        user_id: 'demo-user-1'
-      }
-    }
-  </script>
-  <script src="https://udify.app/embed.min.js" id="8oS92cO3YCLgidRv" defer></script>
-  <style>
-    #dify-chatbot-bubble-window {
-      width: 26rem !important;
-      height: 42rem !important;
-    }
-  </style>
+            <div class="footer-section">
+                <h4 class="lang-de">Services</h4>
+                <h4 class="lang-it">Servizi</h4>
+                <h4 class="lang-en">Services</h4>
+                <a href="#lagonord">LagoNord AI</a>
+                <a href="#workshops" class="lang-de">THOP Enablement</a>
+                <a href="#workshops" class="lang-it">THOP Enablement</a>
+                <a href="#workshops" class="lang-en">THOP Enablement</a>
+                <a href="#workshops">THOP Studio</a>
+            </div>
+
+            <div class="footer-section">
+                <h4 class="lang-de">Rechtliches</h4>
+                <h4 class="lang-it">Note legali</h4>
+                <h4 class="lang-en">Legal</h4>
+                <a href="#" class="lang-de">Impressum</a>
+                <a href="#" class="lang-it">Impronta</a>
+                <a href="#" class="lang-en">Imprint</a>
+                <a href="#" class="lang-de">Datenschutz</a>
+                <a href="#" class="lang-it">Privacy</a>
+                <a href="#" class="lang-en">Privacy</a>
+            </div>
+
+            <div class="footer-section">
+                <h4 class="lang-de">Kontakt</h4>
+                <h4 class="lang-it">Contatto</h4>
+                <h4 class="lang-en">Contact</h4>
+                <p>📧 info@thehouseofprompts.com</p>
+                <p>📞 +39 XXX XXX XXXX</p>
+                <p class="lang-de">📍 Gardasee / München</p>
+                <p class="lang-it">📍 Lago di Garda / Monaco</p>
+                <p class="lang-en">📍 Lake Garda / Munich</p>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2025 The House of Prompts.
+                <span class="lang-de">Alle Rechte vorbehalten.</span>
+                <span class="lang-it">Tutti i diritti riservati.</span>
+                <span class="lang-en">All rights reserved.</span>
+            </p>
+        </div>
+    </footer>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+        // Language Switching
+        function switchLanguage(lang) {
+            document.body.setAttribute('lang', lang);
+            localStorage.setItem('preferredLanguage', lang);
+
+            // Update active state on toggle buttons
+            document.querySelectorAll('.lang-option').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.getElementById('lang-' + lang).classList.add('active');
+
+            // Update select options visibility
+            updateSelectOptions(lang);
+        }
+
+        function updateSelectOptions(lang) {
+            const select = document.querySelector('select[name="interest"]');
+            const options = select.querySelectorAll('option');
+
+            options.forEach(option => {
+                if (option.value === '') {
+                    // Show only the matching language placeholder
+                    const isVisible = option.classList.contains('lang-' + lang) || option.getAttribute('value') === '';
+                    option.style.display = isVisible ? 'block' : 'none';
+                } else {
+                    // Show only options matching current language
+                    const isVisible = option.classList.contains('lang-' + lang);
+                    option.style.display = isVisible ? 'block' : 'none';
+                }
+            });
+        }
+
+        // Set initial language on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedLang = localStorage.getItem('preferredLanguage') || 'de';
+            switchLanguage(savedLang);
+        });
+
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            document.getElementById('navLinks').classList.toggle('active');
+        }
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', function() {
+                document.getElementById('navLinks').classList.remove('active');
+            });
+        });
+
+        // Accordion Toggle
+        function toggleAccordion(header) {
+            const content = header.nextElementSibling;
+            const isActive = content.classList.contains('active');
+
+            // Close all accordions
+            document.querySelectorAll('.accordion-content').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            // Toggle clicked accordion
+            if (!isActive) {
+                content.classList.add('active');
+            }
+        }
+
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Form Submission (placeholder)
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const currentLang = document.body.getAttribute('lang');
+            const messages = {
+                'de': 'Vielen Dank! Wir melden uns innerhalb von 24 Stunden bei Ihnen.',
+                'it': 'Grazie! Vi contatteremo entro 24 ore.',
+                'en': 'Thank you! We will contact you within 24 hours.'
+            };
+
+            alert(messages[currentLang]);
+
+            // Here you would normally send the form data to your backend
+            // For now, we just reset the form
+            this.reset();
+        });
+    </script>
 </body>
 </html>
